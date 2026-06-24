@@ -84,3 +84,131 @@ graph LR
 - `k8s/.../mysql.yaml` ConfigMap — Used by Kubernetes (can't mount local files into pods)
 
 Both target the same MySQL behavior: files in `/docker-entrypoint-initdb.d/` run on first container start. They're separate because Docker Compose and K8s use different mechanisms to get files into containers.
+
+
+---
+
+## Kind (Kubernetes IN Docker)
+
+### What is Kind?
+
+- A tool for running local Kubernetes clusters using **Docker containers** as nodes
+- Each cluster "node" is actually a Docker container, not a VM
+- Lightweight, fast to create/destroy, good for local dev and CI
+
+### Alternatives to Kind
+
+| Tool | Runs in | Multi-node | Best for |
+|------|---------|-----------|----------|
+| **Kind** | Docker containers | Yes | Local dev, CI pipelines |
+| **Minikube** | VM or Docker | No (single) | Beginners, addons |
+| **k3d** | Docker containers | Yes | Fast lightweight clusters |
+| **MicroK8s** | Host (snap) | Yes | Linux users |
+| **Docker Desktop** | VM | No | Zero-config quick tests |
+
+### kind-config.yaml
+
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        listenAddress: "127.0.0.1"
+        protocol: TCP
+```
+
+- Single control-plane node
+- Maps port 80 inside the cluster → port 80 on localhost
+- Allows accessing services via `http://localhost` (with an Ingress controller)
+
+### Image Loading: `docker pull` vs `kind load`
+
+```
+Docker Hub (remote)
+       │
+       │  docker pull
+       ▼
+Local Docker daemon (your machine)
+       │
+       │  kind load docker-image
+       ▼
+Kind cluster node (separate internal image store)
+```
+
+- **`docker pull`** — Downloads images from Docker Hub to your local Docker daemon
+- **`kind load docker-image`** — Copies images from your local Docker daemon into the Kind cluster's nodes
+- Kind nodes can't see your local Docker images directly (they run their own container runtime inside)
+- Pre-loading avoids pods trying to pull from Docker Hub again from inside the cluster
+
+### Using Your Own Images (not instructor's)
+
+The `kind-load.sh` pulls instructor images (`saiupadhyayula007/...`). Replace with your own:
+
+**Option A: Build locally (no Docker Hub push needed)**
+
+```bash
+# Build all service images locally
+docker build -t my-api-gateway:latest ./api-gateway
+docker build -t my-product-service:latest ./product-service
+docker build -t my-order-service:latest ./order-service
+docker build -t my-inventory-service:latest ./inventory-service
+docker build -t my-notification-service:latest ./notification-service
+docker build -t my-frontend:latest ./frontend
+```
+
+**Verify builds succeeded:**
+```bash
+# Check all your images exist
+docker images | findstr "my-"
+
+# Or check one specific image
+docker images my-api-gateway
+
+# Quick test — run one to see if it starts
+docker run --rm -p 8080:8080 my-api-gateway:latest
+# Ctrl+C to stop
+```
+
+> **Tip:** If `docker build` finishes with `Successfully tagged my-api-gateway:latest`, the build is good.
+> If it fails, you'll see an error and no image is created.
+
+```bash
+# Load all into Kind
+kind load docker-image -n microservices my-api-gateway:latest
+kind load docker-image -n microservices my-product-service:latest
+kind load docker-image -n microservices my-order-service:latest
+kind load docker-image -n microservices my-inventory-service:latest
+kind load docker-image -n microservices my-notification-service:latest
+kind load docker-image -n microservices my-frontend:latest
+```
+
+**Option B: Push to your own Docker Hub**
+```bash
+docker pull YOUR_USERNAME/api-gateway:latest
+kind load docker-image -n microservices YOUR_USERNAME/api-gateway:latest
+```
+
+> **Important:** Also update image names in `k8s/manifests/applications/*.yml` to match your image names.
+
+### Common Kind Commands
+
+| Command | What it does |
+|---------|-------------|
+| `kind create cluster --config kind-config.yaml --name microservices` | Create cluster |
+| `kind get clusters` | List clusters |
+| `kind load docker-image IMAGE --name microservices` | Load image into cluster |
+| `kind delete cluster --name microservices` | Delete cluster |
+| `kubectl cluster-info --context kind-microservices` | Verify cluster connection |
+| `kubectl get nodes` | Check node status |
+| `kubectl get pods` | Check running pods |
+
+### Deployment Order
+
+1. Create Kind cluster
+2. Load images into cluster
+3. Install Ingress controller: `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`
+4. Deploy infrastructure: `kubectl apply -f k8s/manifests/infra/`
+5. Deploy applications: `kubectl apply -f k8s/manifests/applications/`
