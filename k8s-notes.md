@@ -143,55 +143,153 @@ Kind cluster node (separate internal image store)
 - Kind nodes can't see your local Docker images directly (they run their own container runtime inside)
 - Pre-loading avoids pods trying to pull from Docker Hub again from inside the cluster
 
-### Using Your Own Images (not instructor's)
+### Using Your Own Images
 
-The `kind-load.sh` pulls instructor images (`saiupadhyayula007/...`). Replace with your own:
+The default image prefix is `saiupadhyayula007` (the instructor's Docker Hub). You can rename this to your own username or any prefix you want.
 
-**Option A: Build locally (no Docker Hub push needed)**
+#### Changing the Image Prefix
 
-```bash
-# Build all service images locally
-docker build -t my-api-gateway:latest ./api-gateway
-docker build -t my-product-service:latest ./product-service
-docker build -t my-order-service:latest ./order-service
-docker build -t my-inventory-service:latest ./inventory-service
-docker build -t my-notification-service:latest ./notification-service
-docker build -t my-frontend:latest ./frontend
+The image name is defined in the root `pom.xml`:
+
+```xml
+<image>
+  <name>${prefix}/new-${project.artifactId}</name>
+</image>
 ```
 
-**Verify builds succeeded:**
-```bash
-# Check all your images exist
-docker images | findstr "my-"
+Replace `${prefix}` with your Docker Hub username or any name (e.g., `myuser`, `mycompany`, `local`).
 
-# Or check one specific image
-docker images my-api-gateway
+Then update these files to match:
+- `k8s/kind/kind-load.sh` → replace the prefix in all image names
+- `k8s/manifests/applications/*.yml` → replace `image: .../...` with your prefix
 
-# Quick test — run one to see if it starts
-docker run --rm -p 8080:8080 my-api-gateway:latest
-# Ctrl+C to stop
-```
+---
 
-> **Tip:** If `docker build` finishes with `Successfully tagged my-api-gateway:latest`, the build is good.
-> If it fails, you'll see an error and no image is created.
+#### Option A: Local Build (No Docker Hub Push)
+
+Build images locally and load them straight into Kind. Nothing gets pushed to any registry.
+
+**Step 1: Build all backend services**
 
 ```bash
-# Load all into Kind
-kind load docker-image -n microservices my-api-gateway:latest
-kind load docker-image -n microservices my-product-service:latest
-kind load docker-image -n microservices my-order-service:latest
-kind load docker-image -n microservices my-inventory-service:latest
-kind load docker-image -n microservices my-notification-service:latest
-kind load docker-image -n microservices my-frontend:latest
+# From project root — builds all 5 services using Spring Boot Buildpacks
+./mvnw spring-boot:build-image -DskipTests
 ```
 
-**Option B: Push to your own Docker Hub**
+**Step 2: Build the frontend**
+
 ```bash
-docker pull YOUR_USERNAME/api-gateway:latest
-kind load docker-image -n microservices YOUR_USERNAME/api-gateway:latest
+cd frontend
+docker build -t ${prefix}/frontend:latest .
+cd ..
 ```
 
-> **Important:** Also update image names in `k8s/manifests/applications/*.yml` to match your image names.
+**Step 3: Verify images exist**
+
+```bash
+docker images | findstr "${prefix}"
+```
+
+**Step 4: Load into Kind (no pull needed)**
+
+```bash
+kind load docker-image -n microservices ${prefix}/new-api-gateway:latest
+kind load docker-image -n microservices ${prefix}/new-product-service:latest
+kind load docker-image -n microservices ${prefix}/new-order-service:latest
+kind load docker-image -n microservices ${prefix}/new-inventory-service:latest
+kind load docker-image -n microservices ${prefix}/new-notification-service:latest
+kind load docker-image -n microservices ${prefix}/frontend:latest
+```
+
+**Step 5: Set `imagePullPolicy: Never` in all manifests**
+
+In each `k8s/manifests/applications/*.yml`, add `imagePullPolicy: Never` under the container spec:
+
+```yaml
+containers:
+  - name: api-gateway
+    image: ${prefix}/new-api-gateway:latest
+    imagePullPolicy: Never    # <-- use local image only
+```
+
+This tells Kubernetes to ONLY use images already loaded into the node and never try to pull from a registry.
+
+**Rebuild a single service after code changes:**
+
+```bash
+# Rebuild only order-service
+./mvnw spring-boot:build-image -DskipTests -pl order-service
+
+# Reload into Kind
+kind load docker-image -n microservices ${prefix}/new-order-service:latest
+
+# Restart the deployment to pick up new image
+kubectl rollout restart deployment order-service
+```
+
+**Troubleshooting:**
+
+| Pod Status | Fix |
+|------------|-----|
+| `ErrImageNeverPull` | Image wasn't loaded into Kind. Run `kind load docker-image -n microservices <image>` |
+| `ImagePullBackOff` | You forgot `imagePullPolicy: Never` in the manifest |
+
+---
+
+#### Option B: Push to Docker Hub
+
+Build locally, push to your Docker Hub account, then let Kind pull from there.
+
+**Step 1: Build images**
+
+```bash
+./mvnw spring-boot:build-image -DskipTests
+cd frontend && docker build -t ${prefix}/frontend:latest . && cd ..
+```
+
+**Step 2: Push to Docker Hub**
+
+```bash
+docker login
+
+docker push ${prefix}/new-api-gateway:latest
+docker push ${prefix}/new-product-service:latest
+docker push ${prefix}/new-order-service:latest
+docker push ${prefix}/new-inventory-service:latest
+docker push ${prefix}/new-notification-service:latest
+docker push ${prefix}/frontend:latest
+```
+
+**Step 3: Pull and load into Kind**
+
+```bash
+docker pull ${prefix}/new-api-gateway:latest
+docker pull ${prefix}/new-product-service:latest
+docker pull ${prefix}/new-order-service:latest
+docker pull ${prefix}/new-inventory-service:latest
+docker pull ${prefix}/new-notification-service:latest
+docker pull ${prefix}/frontend:latest
+
+kind load docker-image -n microservices ${prefix}/new-api-gateway:latest
+kind load docker-image -n microservices ${prefix}/new-product-service:latest
+kind load docker-image -n microservices ${prefix}/new-order-service:latest
+kind load docker-image -n microservices ${prefix}/new-inventory-service:latest
+kind load docker-image -n microservices ${prefix}/new-notification-service:latest
+kind load docker-image -n microservices ${prefix}/frontend:latest
+```
+
+**Step 4: Manifests — use `imagePullPolicy: IfNotPresent` (default)**
+
+No need to set `imagePullPolicy: Never` since images exist in Docker Hub as a fallback. You can omit it or set:
+
+```yaml
+containers:
+  - name: api-gateway
+    image: ${prefix}/new-api-gateway:latest
+    imagePullPolicy: IfNotPresent
+```
+
+> **Tip:** To enable auto-push during build (skip manual `docker push`), uncomment the `<docker><publishRegistry>` section in the root `pom.xml` and set `<publish>true</publish>`.
 
 ### Common Kind Commands
 
