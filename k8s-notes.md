@@ -187,7 +187,7 @@ cd ..
 **Step 3: Verify images exist**
 
 ```bash
-docker images | findstr "${prefix}"
+docker images "${prefix}/*"
 ```
 
 **Step 4: Load into Kind (no pull needed)**
