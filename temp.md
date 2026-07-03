@@ -1,7 +1,4 @@
- kind % ./create-kind-cluster.sh
-===Starting Kind Cluster===
-ERROR: failed to create cluster: node(s) already exist for a cluster with the name "microservices"
-Loading Docker Images into Kind Cluster
+ kind % ./kind-load.sh 
 === Kind Image Loader ===
 1) Load infrastructure images only
 2) Load application images only
@@ -130,3 +127,4 @@ Command Output: ctr: content digest sha256:1debd171f391ce404c960ec8bec6ea8e9379a
 Loading grafana/grafana:10.1.0 ...
 ERROR: failed to load image: command "docker exec --privileged -i microservices-control-plane ctr --namespace=k8s.io images import --all-platforms --digests --snapshotter=overlayfs -" failed with error: exit status 1
 Command Output: ctr: content digest sha256:d04d48ecbe41e513dc934e57ccb4947034cd5005fa17fdf1331a8997e314beda: not found
+Enter image prefix [myuser]: 
