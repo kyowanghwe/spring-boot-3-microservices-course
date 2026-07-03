@@ -14,7 +14,15 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: saiupadhyayula007/new-notification-service:latest
+          image: myuser/new-notification-service:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
           env:
             - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
               valueFrom:

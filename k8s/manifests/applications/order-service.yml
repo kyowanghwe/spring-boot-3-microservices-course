@@ -14,7 +14,15 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: saiupadhyayula007/new-order-service:latest
+          image: myuser/new-order-service:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
           env:
             - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
               valueFrom:

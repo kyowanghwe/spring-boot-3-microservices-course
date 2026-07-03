@@ -14,7 +14,15 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: saiupadhyayula007/new-inventory-service:latest
+          image: myuser/new-inventory-service:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
           env:
             - name: SPRING_DATASOURCE_URL
               valueFrom:

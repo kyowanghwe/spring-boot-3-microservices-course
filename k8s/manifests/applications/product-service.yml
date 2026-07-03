@@ -14,7 +14,15 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: saiupadhyayula007/new-product-service:latest
+          image: myuser/new-product-service:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
           env:
             - name: SPRING_DATA_MONGODB_URI
               valueFrom:

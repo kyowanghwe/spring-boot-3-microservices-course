@@ -10,8 +10,8 @@ This single file contains 6 Kubernetes resources that work together:
 - Exposes port 3306 inside the pod
 - Pulls root password from a Secret (`mysql-secrets`)
 - Mounts two volumes:
-  - `/var/lib/mysql` → PVC for data persistence (survives pod restarts)
-  - `/docker-entrypoint-initdb.d` → ConfigMap with init SQL (runs on first startup)
+    - `/var/lib/mysql` → PVC for data persistence (survives pod restarts)
+    - `/docker-entrypoint-initdb.d` → ConfigMap with init SQL (runs on first startup)
 
 ### 2. Service — Network access
 
@@ -254,6 +254,14 @@ kubectl rollout restart deployment order-service
 
 Build locally, push to your Docker Hub account, then let Kind pull from there.
 
+> **Why push to Docker Hub even for Kind?**
+> In practice, `imagePullPolicy: Never` with `kind load docker-image` can be unreliable — pods still get `ImagePullBackOff` or `ErrImagePull` due to:
+> - Image digest/tag mismatches between local Docker and Kind's containerd runtime
+> - Kubernetes defaulting to pull for `:latest` tags despite the policy
+> - Stale ReplicaSets retaining old pod specs after manifest updates
+>
+> Pushing to Docker Hub and using `imagePullPolicy: IfNotPresent` is the more reliable approach. Kind will still pull once and cache the image, so subsequent pod restarts are fast.
+
 **Step 1: Build images**
 
 ```bash
@@ -261,46 +269,51 @@ Build locally, push to your Docker Hub account, then let Kind pull from there.
 cd frontend && docker build -t ${prefix}/frontend:latest . && cd ..
 ```
 
-**Step 2: Push to Docker Hub**
+**Step 2: Log in to Docker Hub**
 
 ```bash
 docker login
-
-docker push ${prefix}/new-api-gateway:latest
-docker push ${prefix}/new-product-service:latest
-docker push ${prefix}/new-order-service:latest
-docker push ${prefix}/new-inventory-service:latest
-docker push ${prefix}/new-notification-service:latest
-docker push ${prefix}/frontend:latest
+# Enter your Docker Hub username and password (or access token)
 ```
 
-**Step 3: Pull and load into Kind**
+If your images were built with a different prefix (e.g., `myuser`), re-tag them with your actual Docker Hub username:
 
 ```bash
-docker pull ${prefix}/new-api-gateway:latest
-docker pull ${prefix}/new-product-service:latest
-docker pull ${prefix}/new-order-service:latest
-docker pull ${prefix}/new-inventory-service:latest
-docker pull ${prefix}/new-notification-service:latest
-docker pull ${prefix}/frontend:latest
-
-kind load docker-image -n microservices ${prefix}/new-api-gateway:latest
-kind load docker-image -n microservices ${prefix}/new-product-service:latest
-kind load docker-image -n microservices ${prefix}/new-order-service:latest
-kind load docker-image -n microservices ${prefix}/new-inventory-service:latest
-kind load docker-image -n microservices ${prefix}/new-notification-service:latest
-kind load docker-image -n microservices ${prefix}/frontend:latest
+docker tag myuser/new-api-gateway:latest yourdockerhubuser/new-api-gateway:latest
+docker tag myuser/new-product-service:latest yourdockerhubuser/new-product-service:latest
+docker tag myuser/new-order-service:latest yourdockerhubuser/new-order-service:latest
+docker tag myuser/new-inventory-service:latest yourdockerhubuser/new-inventory-service:latest
+docker tag myuser/new-notification-service:latest yourdockerhubuser/new-notification-service:latest
+docker tag myuser/frontend:latest yourdockerhubuser/frontend:latest
 ```
 
-**Step 4: Manifests — use `imagePullPolicy: IfNotPresent` (default)**
+**Step 3: Push to Docker Hub**
 
-No need to set `imagePullPolicy: Never` since images exist in Docker Hub as a fallback. You can omit it or set:
+```bash
+docker push yourdockerhubuser/new-api-gateway:latest
+docker push yourdockerhubuser/new-product-service:latest
+docker push yourdockerhubuser/new-order-service:latest
+docker push yourdockerhubuser/new-inventory-service:latest
+docker push yourdockerhubuser/new-notification-service:latest
+docker push yourdockerhubuser/frontend:latest
+```
+
+**Step 4: Update K8s manifests**
+
+Change image names and pull policy in all `k8s/manifests/applications/*.yml`:
 
 ```yaml
 containers:
   - name: api-gateway
-    image: ${prefix}/new-api-gateway:latest
+    image: yourdockerhubuser/new-api-gateway:latest
     imagePullPolicy: IfNotPresent
+```
+
+**Step 5: Re-deploy**
+
+```bash
+kubectl apply -f k8s/manifests/applications/
+kubectl rollout restart deployment api-gateway product-service order-service inventory-service notification-service frontend
 ```
 
 > **Tip:** To enable auto-push during build (skip manual `docker push`), uncomment the `<docker><publishRegistry>` section in the root `pom.xml` and set `<publish>true</publish>`.
