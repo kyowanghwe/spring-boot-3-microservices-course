@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: myuser/new-notification-service:latest
+          image: kyowanghwe99/new-notification-service:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:

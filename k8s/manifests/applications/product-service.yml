@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: myuser/new-product-service:latest
+          image: kyowanghwe99/new-product-service:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:

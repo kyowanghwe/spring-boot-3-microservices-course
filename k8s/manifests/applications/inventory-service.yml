@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: myuser/new-inventory-service:latest
+          image: kyowanghwe99/new-inventory-service:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:
