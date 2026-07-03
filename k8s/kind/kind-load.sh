@@ -2,6 +2,12 @@
 
 CLUSTER_NAME="microservices"
 
+kind_load() {
+  local img="$1"
+  echo "Loading $img ..."
+  kind load docker-image "$img" --name "$CLUSTER_NAME"
+}
+
 load_infra() {
   echo "Pulling infrastructure images..."
   docker pull mongo:7.0.5
@@ -18,18 +24,18 @@ load_infra() {
   docker pull grafana/grafana:10.1.0
 
   echo "Loading infrastructure images into Kind..."
-  kind load docker-image -n $CLUSTER_NAME mongo:7.0.5
-  kind load docker-image -n $CLUSTER_NAME mysql:8.3.0
-  kind load docker-image -n $CLUSTER_NAME confluentinc/cp-zookeeper:7.5.0
-  kind load docker-image -n $CLUSTER_NAME confluentinc/cp-kafka:7.5.0
-  kind load docker-image -n $CLUSTER_NAME confluentinc/cp-schema-registry:7.5.0
-  kind load docker-image -n $CLUSTER_NAME provectuslabs/kafka-ui:latest
-  kind load docker-image -n $CLUSTER_NAME mysql:8
-  kind load docker-image -n $CLUSTER_NAME quay.io/keycloak/keycloak:24.0.1
-  kind load docker-image -n $CLUSTER_NAME grafana/loki:main
-  kind load docker-image -n $CLUSTER_NAME prom/prometheus:v2.46.0
-  kind load docker-image -n $CLUSTER_NAME grafana/tempo:2.2.2
-  kind load docker-image -n $CLUSTER_NAME grafana/grafana:10.1.0
+  kind_load mongo:7.0.5
+  kind_load mysql:8.3.0
+  kind_load confluentinc/cp-zookeeper:7.5.0
+  kind_load confluentinc/cp-kafka:7.5.0
+  kind_load confluentinc/cp-schema-registry:7.5.0
+  kind_load provectuslabs/kafka-ui:latest
+  kind_load mysql:8
+  kind_load quay.io/keycloak/keycloak:24.0.1
+  kind_load grafana/loki:main
+  kind_load prom/prometheus:v2.46.0
+  kind_load grafana/tempo:2.2.2
+  kind_load grafana/grafana:10.1.0
 }
 
 load_apps() {
@@ -37,12 +43,12 @@ load_apps() {
   PREFIX=${PREFIX:-myuser}
 
   echo "Loading application images with prefix '$PREFIX' into Kind..."
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/frontend:latest
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/new-api-gateway:latest
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/new-product-service:latest
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/new-order-service:latest
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/new-inventory-service:latest
-  kind load docker-image -n $CLUSTER_NAME ${PREFIX}/new-notification-service:latest
+  kind_load ${PREFIX}/frontend:latest
+  kind_load ${PREFIX}/new-api-gateway:latest
+  kind_load ${PREFIX}/new-product-service:latest
+  kind_load ${PREFIX}/new-order-service:latest
+  kind_load ${PREFIX}/new-inventory-service:latest
+  kind_load ${PREFIX}/new-notification-service:latest
 }
 
 load_all() {

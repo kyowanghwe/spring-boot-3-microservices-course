@@ -169,14 +169,24 @@ Then update these files to match:
 
 Build images locally and load them straight into Kind. Nothing gets pushed to any registry.
 
-**Step 1: Build all backend services**
+**Step 1: Package all services**
 
 ```bash
-# From project root — builds all 5 services using Spring Boot Buildpacks
-./mvnw spring-boot:build-image -DskipTests
+# From project root — compiles and packages all JARs
+./mvnw package -DskipTests
 ```
 
-**Step 2: Build the frontend**
+**Step 2: Build Docker images**
+
+```bash
+docker build -t ${prefix}/new-api-gateway:latest ./api-gateway
+docker build -t ${prefix}/new-product-service:latest ./product-service
+docker build -t ${prefix}/new-order-service:latest ./order-service
+docker build -t ${prefix}/new-inventory-service:latest ./inventory-service
+docker build -t ${prefix}/new-notification-service:latest ./notification-service
+```
+
+**Step 3: Build the frontend**
 
 ```bash
 cd frontend
@@ -184,13 +194,13 @@ docker build -t ${prefix}/frontend:latest .
 cd ..
 ```
 
-**Step 3: Verify images exist**
+**Step 4: Verify images exist**
 
 ```bash
 docker images "${prefix}/*"
 ```
 
-**Step 4: Load into Kind (no pull needed)**
+**Step 5: Load into Kind (no pull needed)**
 
 ```bash
 kind load docker-image -n microservices ${prefix}/new-api-gateway:latest
@@ -201,7 +211,7 @@ kind load docker-image -n microservices ${prefix}/new-notification-service:lates
 kind load docker-image -n microservices ${prefix}/frontend:latest
 ```
 
-**Step 5: Set `imagePullPolicy: Never` in all manifests**
+**Step 6: Set `imagePullPolicy: Never` in all manifests**
 
 In each `k8s/manifests/applications/*.yml`, add `imagePullPolicy: Never` under the container spec:
 
@@ -218,7 +228,8 @@ This tells Kubernetes to ONLY use images already loaded into the node and never 
 
 ```bash
 # Rebuild only order-service
-./mvnw spring-boot:build-image -DskipTests -pl order-service
+./mvnw package -DskipTests -pl order-service
+docker build -t ${prefix}/new-order-service:latest ./order-service
 
 # Reload into Kind
 kind load docker-image -n microservices ${prefix}/new-order-service:latest
@@ -226,6 +237,9 @@ kind load docker-image -n microservices ${prefix}/new-order-service:latest
 # Restart the deployment to pick up new image
 kubectl rollout restart deployment order-service
 ```
+
+> **Alternative: Spring Boot Buildpacks**
+> Instead of Dockerfiles, you can use `./mvnw spring-boot:build-image -DskipTests` which uses Cloud Native Buildpacks. However, this requires pulling a builder image (`paketobuildpacks/builder-jammy-tiny`) which may fail on some Docker Desktop versions with a 400 "Bad Request" error. The Dockerfile approach above is more reliable.
 
 **Troubleshooting:**
 
@@ -307,6 +321,47 @@ containers:
 
 1. Create Kind cluster
 2. Load images into cluster
-3. Install Ingress controller: `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`
-4. Deploy infrastructure: `kubectl apply -f k8s/manifests/infra/`
-5. Deploy applications: `kubectl apply -f k8s/manifests/applications/`
+3. Verify images loaded:
+   ```bash
+   # List all images inside the Kind node
+   docker exec microservices-control-plane crictl images
+
+   # Filter to application images
+   docker exec microservices-control-plane crictl images | grep myuser
+
+   # Check cluster health
+   kubectl get nodes
+   ```
+4. Install Ingress controller: `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml`
+5. Deploy infrastructure: `kubectl apply -f k8s/manifests/infra/`
+6. Deploy applications: `kubectl apply -f k8s/manifests/applications/`
+
+
+---
+
+## Troubleshooting: Docker Desktop Containerd Image Store
+
+### Problem
+
+`kind load docker-image` fails with errors like:
+
+```
+ERROR: failed to load image: command "docker exec --privileged -i microservices-control-plane ctr ..." 
+failed with error: exit status 1
+Command Output: ctr: content digest sha256:...: not found
+```
+
+### Cause
+
+Docker Desktop has the **containerd image store** enabled (default in newer versions). This changes how images are stored internally, and `kind load` can't resolve the multi-platform manifest digests.
+
+### Fix
+
+1. **Docker Desktop → Settings → General → uncheck "Use containerd for pulling and storing images" → Apply & Restart**
+2. Recreate the Kind cluster (Docker restart wipes containers):
+   ```bash
+   kind create cluster --name microservices --config kind-config.yaml
+   ```
+3. Re-run `./kind-load.sh` — images will load cleanly
+
+
