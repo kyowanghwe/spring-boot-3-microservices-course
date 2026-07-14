@@ -1,4 +1,4 @@
- spring-boot-3-microservices-course % kubectl get pods --all-namespaces
+huykieu@Huys-MacBook-Pro spring-boot-3-microservices-course % kubectl get pods --all-namespaces
 NAMESPACE             NAME                                                  READY   STATUS    RESTARTS      AGE
 kube-system           coredns-589f44dc88-b8hf5                              1/1     Running   2 (16m ago)   10d
 kube-system           coredns-589f44dc88-vqbmg                              1/1     Running   2 (16m ago)   10d
