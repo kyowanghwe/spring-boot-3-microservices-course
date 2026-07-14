@@ -418,9 +418,33 @@ To turn auth back on:
 ```
 4. The frontend uses `angular-auth-oidc-client` to handle the OIDC flow automatically
 
+### Important: Disable CSRF When Disabling OAuth2
+
+When you comment out `.oauth2ResourceServer(...)`, Spring Security's **CSRF protection remains enabled by default**. This causes all POST/PUT/DELETE requests to return **403 Forbidden** even though `.anyRequest().permitAll()` is set.
+
+**Why?** When OAuth2 resource server is active, Spring auto-disables CSRF (stateless = no CSRF needed). Without it, CSRF protection kicks in and blocks state-changing requests that don't include a CSRF token.
+
+**Fix:** Explicitly disable CSRF in `SecurityConfig.java`:
+
+```java
+return httpSecurity
+    .csrf(csrf -> csrf.disable())
+    .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(freeResourceUrls)
+            .permitAll()
+            .anyRequest().permitAll())
+    .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    .build();
+```
+
+Without this, GET requests work fine but POST/PUT/DELETE return 403.
+
 ### Current State of SecurityConfig.java
 
 ```java
+// CSRF is DISABLED (required when OAuth2 is commented out):
+.csrf(csrf -> csrf.disable())
+
 // Auth is DISABLED (permitAll):
 .anyRequest().permitAll())
 
