@@ -578,3 +578,76 @@ kubectl exec -n microservices-apps deployment/api-gateway -- sh -c '
   echo "Inventory:   $(curl -s http://inventory-service:8082/actuator/health | grep -o "UP\|DOWN")"
 '
 ```
+
+
+---
+
+## Troubleshooting: Rebuilding & Reloading Images in Kind
+
+### Problem: `kind load` says "already present on all nodes" (stale image)
+
+When you rebuild an image with the same `latest` tag, Kind compares by image ID (SHA). If the old image is still cached on the node, it skips the load.
+
+### Fix: Force reload with `latest` tag
+
+```bash
+# 1. Remove the old image from Kind's node
+docker exec microservices-control-plane crictl rmi <image-name>:latest
+
+# 2. Rebuild the image
+mvn spring-boot:build-image -pl <module> -DskipTests -Dspring-boot.build-image.imageName=<image-name>:latest
+
+# 3. Load the new image into Kind
+kind load docker-image <image-name>:latest --name microservices
+
+# 4. Delete the pod to force restart with new image
+kubectl delete pod -n microservices-apps -l app=<app-name>
+```
+
+### Example: Rebuilding api-gateway
+
+```bash
+docker exec microservices-control-plane crictl rmi kyowanghwe99/new-api-gateway:latest
+mvn spring-boot:build-image -pl api-gateway -DskipTests -Dspring-boot.build-image.imageName=kyowanghwe99/new-api-gateway:latest
+kind load docker-image kyowanghwe99/new-api-gateway:latest --name microservices
+kubectl delete pod -n microservices-apps -l app=api-gateway
+```
+
+### Verify the new image is running
+
+```bash
+# Check the image SHA — should be different from before
+kubectl get pods -n microservices-apps -l app=api-gateway -o jsonpath='{.items[0].status.containerStatuses[0].imageID}'
+```
+
+### Key points
+
+- `kind load` compares by image ID, not tag name — same tag with old SHA = skipped
+- `crictl rmi` removes the cached image from Kind's containerd runtime
+- Always verify with `imageID` after restart to confirm the new image is active
+- Alternative: use versioned tags (`v2`, `v3`) instead of `latest` to avoid caching issues entirely
+
+
+---
+
+## Troubleshooting: 503 Service Unavailable (Circuit Breaker)
+
+### Symptom
+
+Swagger UI or API calls through the gateway return 503 with body: "Service Unavailable, please try again later"
+
+### Cause
+
+The API Gateway's circuit breaker tripped because it can't reach the target service. Common reasons:
+- **Wrong namespace in service URL** — e.g., `mongodb.default.svc.cluster.local` when MongoDB is in `microservices-infra`
+- Service pod is running but can't connect to its database → fails to serve requests
+- Pod shows `1/1 Running` but the app inside is broken (check logs)
+
+### Fix
+
+1. Check the ConfigMap URLs match actual service namespaces
+2. Check target service logs: `kubectl logs -n <namespace> deployment/<service> --tail=50`
+3. Fix the ConfigMap, re-apply, and restart the pod
+
+
+
