@@ -10,8 +10,8 @@ This single file contains 6 Kubernetes resources that work together:
 - Exposes port 3306 inside the pod
 - Pulls root password from a Secret (`mysql-secrets`)
 - Mounts two volumes:
-    - `/var/lib/mysql` → PVC for data persistence (survives pod restarts)
-    - `/docker-entrypoint-initdb.d` → ConfigMap with init SQL (runs on first startup)
+  - `/var/lib/mysql` → PVC for data persistence (survives pod restarts)
+  - `/docker-entrypoint-initdb.d` → ConfigMap with init SQL (runs on first startup)
 
 ### 2. Service — Network access
 
@@ -378,3 +378,203 @@ Docker Desktop has the **containerd image store** enabled (default in newer vers
 3. Re-run `./kind-load.sh` — images will load cleanly
 
 
+
+
+---
+
+## Namespace Organization
+
+### Why Use Namespaces?
+
+- Logical separation of concerns (infra vs apps vs monitoring)
+- Ability to apply resource quotas and network policies per group
+- Cleaner `kubectl get pods` output (filter by namespace)
+- Closer to production best practices
+
+### Namespace Layout
+
+| Namespace | Resources |
+|-----------|-----------|
+| `microservices-infra` | mysql, mongodb, kafka (broker), zookeeper, keycloak, keycloak-mysql, schema-registry, kafka-ui, grafana, prometheus, tempo, loki |
+| `microservices-apps` | product-service, order-service, inventory-service, notification-service, api-gateway, frontend |
+
+### Steps to Migrate
+
+**1. Create the namespaces (must exist before deploying into them):**
+
+```bash
+kubectl create namespace microservices-infra
+kubectl create namespace microservices-apps
+```
+
+
+
+**2. Delete existing resources from default namespace:**
+
+```bash
+kubectl delete -f k8s/manifests/infra/
+kubectl delete -f k8s/manifests/applications/
+```
+
+
+
+**4. Update cross-namespace service references in ConfigMaps:**
+
+When services are in different namespaces, use the fully qualified DNS name:
+
+```
+<service-name>.<namespace>.svc.cluster.local
+```
+
+| Old (default namespace) | New (with namespaces) |
+|-------------------------|----------------------|
+| `mysql` | `mysql.microservices-infra.svc.cluster.local` |
+| `mongodb` | `mongodb.microservices-infra.svc.cluster.local` |
+| `broker:9092` | `broker.microservices-infra.svc.cluster.local:9092` |
+| `keycloak:8080` | `keycloak.microservices-infra.svc.cluster.local:8080` |
+| `schema-registry:8081` | `schema-registry.microservices-infra.svc.cluster.local:8081` |
+| `loki:3100` | `loki.monitoring.svc.cluster.local:3100` |
+| `tempo:4317` | `tempo.monitoring.svc.cluster.local:4317` |
+| `product-service:8080` | `product-service.microservices-apps.svc.cluster.local:8080` |
+| `order-service:8081` | `order-service.microservices-apps.svc.cluster.local:8081` |
+| `inventory-service:8082` | `inventory-service.microservices-apps.svc.cluster.local:8082` |
+
+> **Note:** Services within the SAME namespace can still use short names (e.g., `product-service` from `api-gateway` since both are in `microservices-apps`).
+
+**5. Re-deploy:**
+
+```bash
+kubectl apply -f k8s/manifests/infra/ -n microservices-infra
+kubectl apply -f k8s/manifests/applications/ -n microservices-apps
+```
+
+**6. Verify:**
+
+```bash
+kubectl get pods -n microservices-infra
+kubectl get pods -n microservices-apps
+```
+
+### Useful Namespace Commands
+
+| Command | What it does |
+|---------|-------------|
+| `kubectl get namespaces` | List all namespaces |
+| `kubectl get pods -n <namespace>` | List pods in a specific namespace |
+| `kubectl get all -n <namespace>` | List all resources in a namespace |
+| `kubectl get pods --all-namespaces` | List pods across all namespaces |
+| `kubectl config set-context --current --namespace=<namespace>` | Set default namespace for kubectl |
+
+
+---
+
+## Applying Namespace Changes
+
+### Deploy Commands
+
+```bash
+# 1. Create namespaces
+kubectl create namespace microservices-infra
+kubectl create namespace microservices-apps
+
+# 2. Delete old resources from default namespace
+kubectl delete -f k8s/manifests/infra/
+kubectl delete -f k8s/manifests/applications/
+
+# 3. Deploy infrastructure to microservices-infra
+kubectl apply -f k8s/manifests/infra/ -n microservices-infra
+
+# 4. Deploy applications to microservices-apps
+kubectl apply -f k8s/manifests/applications/ -n microservices-apps
+```
+
+### Using `-n` Flag vs Hardcoding `namespace:` in YAML
+
+- `kubectl apply -f <file> -n <namespace>` assigns namespace at deploy time — no YAML edits needed
+- If a manifest already has `namespace:` in metadata, the file wins over the `-n` flag
+- Best approach: don't hardcode `namespace:` in YAML, use `-n` flag for flexibility
+
+### Files That Need Cross-Namespace URL Updates
+
+These files contain `.default.svc.cluster.local` references that must be changed manually:
+
+| File | What to change |
+|------|---------------|
+| `applications/common-config.yml` | ✅ Done — loki→microservices-infra, tempo→microservices-infra, broker→microservices-infra, app services→short names |
+| `applications/api-gateway.yml` | ✅ Done — keycloak→microservices-infra |
+| `applications/inventory-service.yml` | `mysql.default` → `mysql.microservices-infra` |
+| `applications/order-service.yml` | `mysql.default` → `mysql.microservices-infra`, `schema-registry.default` → `schema-registry.microservices-infra` |
+| `applications/product-service.yml` | `mongodb.default` → `mongodb.microservices-infra` |
+| `applications/notification-service.yml` | `schema-registry.default` → `schema-registry.microservices-infra` |
+| `infra/grafana.yml` | `prometheus.default` → `prometheus.microservices-infra`, `tempo.default` → `tempo.microservices-infra`, `loki.default` → `loki.microservices-infra` |
+| `infra/prometheus.yml` | All app targets: `.default` → `.microservices-apps` |
+
+
+---
+
+## Port-Forwarding Reference
+
+### Applications (`microservices-apps`)
+
+| Service | Command | Local URL |
+|---------|---------|-----------|
+| API Gateway | `kubectl port-forward -n microservices-apps svc/api-gateway 9000:9000` | `localhost:9000` |
+| Frontend | `kubectl port-forward -n microservices-apps svc/frontend 4200:80` | `localhost:4200` |
+| Product Service | `kubectl port-forward -n microservices-apps svc/product-service 8080:8080` | `localhost:8080` |
+| Order Service | `kubectl port-forward -n microservices-apps svc/order-service 8081:8081` | `localhost:8081` |
+| Inventory Service | `kubectl port-forward -n microservices-apps svc/inventory-service 8082:8082` | `localhost:8082` |
+| Notification Service | `kubectl port-forward -n microservices-apps svc/notification-service 8083:8083` | `localhost:8083` |
+
+### Infrastructure (`microservices-infra`)
+
+| Service | Command | Local URL |
+|---------|---------|-----------|
+| Grafana | `kubectl port-forward -n microservices-infra svc/grafana 3000:3000` | `localhost:3000` |
+| Prometheus | `kubectl port-forward -n microservices-infra svc/prometheus 9090:9090` | `localhost:9090` |
+| Keycloak | `kubectl port-forward -n microservices-infra svc/keycloak 8181:8080` | `localhost:8181` |
+| Kafka UI | `kubectl port-forward -n microservices-infra svc/kafka-ui 8989:8080` | `localhost:8989` |
+| MongoDB | `kubectl port-forward -n microservices-infra svc/mongodb 27017:27017` | `localhost:27017` |
+| MySQL | `kubectl port-forward -n microservices-infra svc/mysql 3306:3306` | `localhost:3306` |
+| Loki | `kubectl port-forward -n microservices-infra svc/loki 3100:3100` | `localhost:3100` |
+| Tempo | `kubectl port-forward -n microservices-infra svc/tempo 3200:3200` | `localhost:3200` |
+| Schema Registry | `kubectl port-forward -n microservices-infra svc/schema-registry 8085:8081` | `localhost:8085` |
+
+> **Note:** Keycloak uses local port `8181` and Kafka UI uses `8989` to avoid clashing with product-service on `8080`.
+
+### All-in-One Background Script
+
+```bash
+# Start all useful port-forwards in background
+kubectl port-forward -n microservices-apps svc/api-gateway 9000:9000 &
+kubectl port-forward -n microservices-apps svc/frontend 4200:80 &
+kubectl port-forward -n microservices-infra svc/grafana 3000:3000 &
+kubectl port-forward -n microservices-infra svc/keycloak 8181:8080 &
+kubectl port-forward -n microservices-infra svc/kafka-ui 8989:8080 &
+kubectl port-forward -n microservices-infra svc/prometheus 9090:9090 &
+
+# Stop all port-forwards
+kill $(jobs -p)
+```
+
+### Testing Endpoints
+
+Through the API Gateway (`localhost:9000`):
+
+| URL | What it does |
+|-----|-------------|
+| `localhost:9000/swagger-ui.html` | Swagger UI (all service APIs) |
+| `localhost:9000/actuator/health` | API Gateway health check |
+| `localhost:9000/api/product` | Product Service |
+| `localhost:9000/api/order` | Order Service |
+| `localhost:9000/api/inventory` | Inventory Service |
+
+### Quick Health Check (all services at once, no port-forward needed)
+
+```bash
+kubectl exec -n microservices-apps deployment/api-gateway -- sh -c '
+  echo "API Gateway: $(curl -s http://localhost:9000/actuator/health | grep -o "UP\|DOWN")";
+  echo "Product:     $(curl -s http://product-service:8080/actuator/health | grep -o "UP\|DOWN")";
+  echo "Order:       $(curl -s http://order-service:8081/actuator/health | grep -o "UP\|DOWN")";
+  echo "Inventory:   $(curl -s http://inventory-service:8082/actuator/health | grep -o "UP\|DOWN")"
+'
+```
