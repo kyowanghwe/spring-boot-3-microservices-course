@@ -33,7 +33,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <image>
-            <name>myuser/new-${project.artifactId}</name>
+            <name>kyowanghwe99/new-${project.artifactId}</name>
             <builder>paketobuildpacks/builder-jammy-tiny</builder>
             <publish>false</publish>
           </image>
