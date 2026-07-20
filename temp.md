@@ -1,29 +1,4772 @@
- spring-boot-3-microservices-course % kubectl get pods --all-namespaces                                     
-NAMESPACE             NAME                                                  READY   STATUS    RESTARTS      AGE
-kube-system           coredns-589f44dc88-b8hf5                              1/1     Running   2 (83m ago)   11d
-kube-system           coredns-589f44dc88-vqbmg                              1/1     Running   2 (83m ago)   11d
-kube-system           etcd-microservices-control-plane                      1/1     Running   2 (83m ago)   11d
-kube-system           kindnet-9q2jx                                         1/1     Running   2 (83m ago)   11d
-kube-system           kube-apiserver-microservices-control-plane            1/1     Running   2 (83m ago)   11d
-kube-system           kube-controller-manager-microservices-control-plane   1/1     Running   8 (80m ago)   11d
-kube-system           kube-proxy-whhxb                                      1/1     Running   2 (83m ago)   11d
-kube-system           kube-scheduler-microservices-control-plane            1/1     Running   8 (80m ago)   11d
-local-path-storage    local-path-provisioner-855c7b7774-2dpbv               1/1     Running   4 (82m ago)   11d
-microservices-apps    api-gateway-7fc4cc4f97-4cpcq                          1/1     Running   0             8m12s
-microservices-apps    frontend-5794868769-xgbp9                             1/1     Running   0             8m12s
-microservices-apps    inventory-service-5f644668bd-xgq6z                    1/1     Running   0             8m12s
-microservices-apps    notification-service-5cd6f697f7-2kcpx                 1/1     Running   0             8m11s
-microservices-apps    order-service-565dcd8776-p9h7j                        1/1     Running   0             8m11s
-microservices-apps    product-service-6d97fdcc7b-qgr5l                      1/1     Running   0             8m11s
-microservices-infra   broker-677dd59895-nzm7z                               1/1     Running   0             8m13s
-microservices-infra   grafana-686d5699b6-lkwjx                              1/1     Running   0             8m13s
-microservices-infra   kafka-ui-66f9889f87-n427m                             1/1     Running   0             8m13s
-microservices-infra   keycloak-54fbc948b7-5wxhd                             1/1     Running   0             8m13s
-microservices-infra   keycloak-mysql-7887f48bd-kbqhx                        1/1     Running   0             8m13s
-microservices-infra   loki-778c89566b-vwhj6                                 1/1     Running   0             8m13s
-microservices-infra   mongodb-6597494fdc-cqm8r                              1/1     Running   0             8m13s
-microservices-infra   mysql-7c7bf49cb5-w8xvl                                1/1     Running   0             8m13s
-microservices-infra   prometheus-87767d975-mrflk                            1/1     Running   0             8m13s
-microservices-infra   schema-registry-7c75bf9577-z9jjt                      1/1     Running   0             8m13s
-microservices-infra   tempo-5c6db86c46-xkrwl                                1/1     Running   0             8m12s
-microservices-infra   zookeeper-7f88b5d977-b82s7                            1/1     Running   0             8m12s
+                                                                                                                                                                          huykieu@HuysMacBook-Pro spring-boot-3-microservices-course % kubectl logs -f deployment/order-service -n microservices-apps
+Calculated JVM Memory Configuration: -XX:MaxDirectMemorySize=10M -Xmx105168K -XX:MaxMetaspaceSize=169263K -XX:ReservedCodeCacheSize=240M -Xss1M (Total Memory: 768M, Thread Count: 250, Loaded Class Count: 27470, Headroom: 0%)
+Enabling Java Native Memory Tracking
+Adding 121 container CA certificates to JVM truststore
+Spring Cloud Bindings Enabled
+Picked up JAVA_TOOL_OPTIONS: -Djava.security.properties=/layers/paketo-buildpacks_bellsoft-liberica/java-security-properties/java-security.properties -XX:+ExitOnOutOfMemoryError -XX:MaxDirectMemorySize=10M -Xmx105168K -XX:MaxMetaspaceSize=169263K -XX:ReservedCodeCacheSize=240M -Xss1M -XX:+UnlockDiagnosticVMOptions -XX:NativeMemoryTracking=summary -XX:+PrintNMTStatistics -Dorg.springframework.cloud.bindings.boot.enable=true
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ ()_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '| | ' \/ _` | \ \ \ \
+ \\/  ___)| |)| | | | | || (| |  ) ) ) )
+  '  |____| .__|| ||| |\__, | / / / /
+ =========||==============|___/=////
+
+ :: Spring Boot ::               (v3.4.12)
+
+2026-07-20T07:29:41.938Z  INFO 1 --- [order-service] [           main] [                                                 ] c.t.m.order.OrderServiceApplication      : Starting OrderServiceApplication v1.0-SNAPSHOT using Java 21.0.11 with PID 1 (/workspace/BOOT-INF/classes started by cnb in /workspace)
+2026-07-20T07:29:41.955Z  INFO 1 --- [order-service] [           main] [                                                 ] c.t.m.order.OrderServiceApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-07-20T07:29:50.464Z  INFO 1 --- [order-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-20T07:29:50.771Z  INFO 1 --- [order-service] [           main] [                                                 ] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 215 ms. Found 1 JPA repository interface.
+2026-07-20T07:29:53.166Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.cloud.context.scope.GenericScope     : BeanFactory id=0b8ac852-3902-3f40-9a8b-990b284c1c6b
+2026-07-20T07:29:58.271Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-07-20T07:29:58.361Z  INFO 1 --- [order-service] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-20T07:29:58.361Z  INFO 1 --- [order-service] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.49]
+2026-07-20T07:29:58.763Z  INFO 1 --- [order-service] [           main] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-20T07:29:58.763Z  INFO 1 --- [order-service] [           main] [                                                 ] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 15325 ms
+2026-07-20T07:30:03.865Z  INFO 1 --- [order-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-20T07:30:05.471Z  INFO 1 --- [order-service] [           main] [                                                 ] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@d8751de
+2026-07-20T07:30:05.551Z  INFO 1 --- [order-service] [           main] [                                                 ] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-20T07:30:06.761Z  INFO 1 --- [order-service] [           main] [                                                 ] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/order_service (MySQL 8.3)
+2026-07-20T07:30:07.039Z  WARN 1 --- [order-service] [           main] [                                                 ] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.3 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-07-20T07:30:07.562Z  INFO 1 --- [order-service] [           main] [                                                 ] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.409s)
+2026-07-20T07:30:07.849Z  INFO 1 --- [order-service] [           main] [                                                 ] o.f.core.internal.command.DbMigrate      : Current version of schema order_service: 1
+2026-07-20T07:30:07.856Z  INFO 1 --- [order-service] [           main] [                                                 ] o.f.core.internal.command.DbMigrate      : Schema order_service is up to date. No migration necessary.
+2026-07-20T07:30:09.159Z  INFO 1 --- [order-service] [           main] [                                                 ] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-20T07:30:09.358Z  INFO 1 --- [order-service] [           main] [                                                 ] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.36.Final
+2026-07-20T07:30:09.459Z  INFO 1 --- [order-service] [           main] [                                                 ] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-20T07:30:10.174Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-20T07:30:10.382Z  INFO 1 --- [order-service] [           main] [                                                 ] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+        Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+        Database driver: undefined/unknown
+        Database version: 8.3
+        Autocommit mode: undefined/unknown
+        Isolation level: undefined/unknown
+        Minimum pool size: undefined/unknown
+        Maximum pool size: undefined/unknown
+2026-07-20T07:30:12.254Z  INFO 1 --- [order-service] [           main] [                                                 ] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-20T07:30:12.257Z  INFO 1 --- [order-service] [           main] [                                                 ] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-20T07:30:17.854Z  WARN 1 --- [order-service] [           main] [                                                 ] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-20T07:30:18.640Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-07-20T07:30:27.064Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 28 endpoints beneath base path '/actuator'
+2026-07-20T07:30:27.842Z  INFO 1 --- [order-service] [           main] [                                                 ] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-07-20T07:30:27.941Z  INFO 1 --- [order-service] [           main] [                                                 ] c.t.m.order.OrderServiceApplication      : Started OrderServiceApplication in 50.777 seconds (process running for 56.198)
+2026-07-20T07:30:28.780Z  INFO 1 --- [order-service] [nio-8081-exec-1] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-20T07:30:28.781Z  INFO 1 --- [order-service] [nio-8081-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-20T07:30:28.782Z  INFO 1 --- [order-service] [nio-8081-exec-1] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-20T07:44:59.930Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] c.t.m.order.service.OrderService         : Start - Sending OrderPlacedEvent {"orderNumber": "2e2fe43a-7af6-4b25-af03-52d91722e136", "email": "john.doe@example.com", "firstName": "John", "lastName": "Doe"} to Kafka topic order-placed
+2026-07-20T07:45:00.235Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] o.a.k.clients.admin.AdminClientConfig    : AdminClientConfig values: 
+        auto.include.jmx.reporter = true
+        bootstrap.controllers = []
+        bootstrap.servers = [broker.microservices-infra.svc.cluster.local:29092]
+        client.dns.lookup = use_all_dns_ips
+        client.id = order-service-admin-0
+        connections.max.idle.ms = 300000
+        default.api.timeout.ms = 60000
+        enable.metrics.push = true
+        metadata.max.age.ms = 300000
+        metadata.recovery.strategy = none
+        metric.reporters = []
+        metrics.num.samples = 2
+        metrics.recording.level = INFO
+        metrics.sample.window.ms = 30000
+        receive.buffer.bytes = 65536
+        reconnect.backoff.max.ms = 1000
+        reconnect.backoff.ms = 50
+        request.timeout.ms = 30000
+        retries = 2147483647
+        retry.backoff.max.ms = 1000
+        retry.backoff.ms = 100
+        sasl.client.callback.handler.class = null
+        sasl.jaas.config = null
+        sasl.kerberos.kinit.cmd = /usr/bin/kinit
+        sasl.kerberos.min.time.before.relogin = 60000
+        sasl.kerberos.service.name = null
+        sasl.kerberos.ticket.renew.jitter = 0.05
+        sasl.kerberos.ticket.renew.window.factor = 0.8
+        sasl.login.callback.handler.class = null
+        sasl.login.class = null
+        sasl.login.connect.timeout.ms = null
+        sasl.login.read.timeout.ms = null
+        sasl.login.refresh.buffer.seconds = 300
+        sasl.login.refresh.min.period.seconds = 60
+        sasl.login.refresh.window.factor = 0.8
+        sasl.login.refresh.window.jitter = 0.05
+        sasl.login.retry.backoff.max.ms = 10000
+        sasl.login.retry.backoff.ms = 100
+        sasl.mechanism = GSSAPI
+        sasl.oauthbearer.clock.skew.seconds = 30
+        sasl.oauthbearer.expected.audience = null
+        sasl.oauthbearer.expected.issuer = null
+        sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+        sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+        sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+        sasl.oauthbearer.jwks.endpoint.url = null
+        sasl.oauthbearer.scope.claim.name = scope
+        sasl.oauthbearer.sub.claim.name = sub
+        sasl.oauthbearer.token.endpoint.url = null
+        security.protocol = PLAINTEXT
+        security.providers = null
+        send.buffer.bytes = 131072
+        socket.connection.setup.timeout.max.ms = 30000
+        socket.connection.setup.timeout.ms = 10000
+        ssl.cipher.suites = null
+        ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+        ssl.endpoint.identification.algorithm = https
+        ssl.engine.factory.class = null
+        ssl.key.password = null
+        ssl.keymanager.algorithm = SunX509
+        ssl.keystore.certificate.chain = null
+        ssl.keystore.key = null
+        ssl.keystore.location = null
+        ssl.keystore.password = null
+        ssl.keystore.type = JKS
+        ssl.protocol = TLSv1.3
+        ssl.provider = null
+        ssl.secure.random.implementation = null
+        ssl.trustmanager.algorithm = PKIX
+        ssl.truststore.certificates = null
+        ssl.truststore.location = null
+        ssl.truststore.password = null
+        ssl.truststore.type = JKS
+
+2026-07-20T07:45:00.627Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.8.1
+2026-07-20T07:45:00.627Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 70d6ff42debf7e17
+2026-07-20T07:45:00.627Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1784533500539
+2026-07-20T07:45:01.941Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:02.025Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:02.123Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:02.357Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:02.732Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:03.670Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:04.586Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:05.398Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:06.281Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:07.285Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:08.291Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:09.190Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:10.195Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:11.202Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:12.220Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:13.151Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:14.158Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:15.066Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:16.039Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:16.904Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:17.911Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:18.917Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:19.894Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:20.885Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:21.892Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:22.901Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:23.907Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:24.822Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:25.789Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:26.704Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:27.709Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:28.673Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:29.484Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:30.312Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:31.352Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:32.008Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=order-service-admin-0] Metadata update failed
+
+org.apache.kafka.common.errors.TimeoutException: Timed out waiting for a node assignment. Call: fetchMetadata
+
+2026-07-20T07:45:32.316Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:33.330Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:34.238Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:35.242Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:36.245Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:37.248Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:38.074Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:39.078Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:40.085Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:41.092Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:42.098Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:43.105Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:44.129Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:45.058Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:46.063Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:46.900Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:47.794Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:48.742Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:49.744Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:50.747Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:51.676Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:52.683Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:53.691Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:54.709Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:55.694Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:56.666Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:57.534Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:58.373Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:45:59.297Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:00.248Z  WARN 1 --- [order-service] [service-admin-0] [                                                 ] org.apache.kafka.clients.NetworkClient   : [AdminClient clientId=order-service-admin-0] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.ready(NetworkClient.java:320)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.sendEligibleCalls(KafkaAdminClient.java:1252)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.processRequests(KafkaAdminClient.java:1512)
+        at org.apache.kafka.clients.admin.KafkaAdminClient$AdminClientRunnable.run(KafkaAdminClient.java:1455)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:00.744Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.a.kafka.common.utils.AppInfoParser     : App info kafka.admin.client for order-service-admin-0 unregistered
+2026-07-20T07:46:00.745Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.a.k.c.a.i.AdminMetadataManager         : [AdminClient clientId=order-service-admin-0] Metadata update failed
+
+org.apache.kafka.common.errors.TimeoutException: The AdminClient thread has exited. Call: fetchMetadata
+
+2026-07-20T07:46:00.745Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.a.k.clients.admin.KafkaAdminClient     : [AdminClient clientId=order-service-admin-0] Timed out 1 remaining operation(s) during close.
+2026-07-20T07:46:00.764Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-07-20T07:46:00.764Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-07-20T07:46:00.764Z  INFO 1 --- [order-service] [service-admin-0] [                                                 ] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-07-20T07:46:00.765Z ERROR 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-0ce06f077cc594f8] o.springframework.kafka.core.KafkaAdmin  : Could not obtain cluster info
+
+java.util.concurrent.TimeoutException: null
+        at java.base/java.util.concurrent.CompletableFuture.timedGet(Unknown Source)
+        at java.base/java.util.concurrent.CompletableFuture.get(Unknown Source)
+        at org.apache.kafka.common.internals.KafkaFutureImpl.get(KafkaFutureImpl.java:180)
+        at org.springframework.kafka.core.KafkaAdmin.clusterId(KafkaAdmin.java:367)
+        at org.springframework.kafka.core.KafkaTemplate.clusterId(KafkaTemplate.java:557)
+        at org.springframework.kafka.support.micrometer.KafkaRecordSenderContext.<init>(KafkaRecordSenderContext.java:53)
+        at org.springframework.kafka.core.KafkaTemplate.lambda$observeSend$3(KafkaTemplate.java:815)
+        at io.micrometer.observation.Observation.createNotStarted(Observation.java:171)
+        at io.micrometer.observation.docs.ObservationDocumentation.observation(ObservationDocumentation.java:188)
+        at org.springframework.kafka.core.KafkaTemplate.observeSend(KafkaTemplate.java:813)
+        at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:597)
+        at com.techie.microservices.order.service.OrderService.placeOrder(OrderService.java:42)
+        at com.techie.microservices.order.controller.OrderController.placeOrder(OrderController.java:26)
+        at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+        at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+        at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+        at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+        at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+        at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+        at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+        at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+        at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:733)
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774)
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+        at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+        at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:00.841Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+        acks = -1
+        auto.include.jmx.reporter = true
+        batch.size = 16384
+        bootstrap.servers = [broker.microservices-infra.svc.cluster.local:29092]
+        buffer.memory = 33554432
+        client.dns.lookup = use_all_dns_ips
+        client.id = order-service-producer-1
+        compression.gzip.level = -1
+        compression.lz4.level = 9
+        compression.type = none
+        compression.zstd.level = 3
+        connections.max.idle.ms = 540000
+        delivery.timeout.ms = 120000
+        enable.idempotence = true
+        enable.metrics.push = true
+        interceptor.classes = []
+        key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+        linger.ms = 0
+        max.block.ms = 60000
+        max.in.flight.requests.per.connection = 5
+        max.request.size = 1048576
+        metadata.max.age.ms = 300000
+        metadata.max.idle.ms = 300000
+        metadata.recovery.strategy = none
+        metric.reporters = []
+        metrics.num.samples = 2
+        metrics.recording.level = INFO
+        metrics.sample.window.ms = 30000
+        partitioner.adaptive.partitioning.enable = true
+        partitioner.availability.timeout.ms = 0
+        partitioner.class = null
+        partitioner.ignore.keys = false
+        receive.buffer.bytes = 32768
+        reconnect.backoff.max.ms = 1000
+        reconnect.backoff.ms = 50
+        request.timeout.ms = 30000
+        retries = 2147483647
+        retry.backoff.max.ms = 1000
+        retry.backoff.ms = 100
+        sasl.client.callback.handler.class = null
+        sasl.jaas.config = null
+        sasl.kerberos.kinit.cmd = /usr/bin/kinit
+        sasl.kerberos.min.time.before.relogin = 60000
+        sasl.kerberos.service.name = null
+        sasl.kerberos.ticket.renew.jitter = 0.05
+        sasl.kerberos.ticket.renew.window.factor = 0.8
+        sasl.login.callback.handler.class = null
+        sasl.login.class = null
+        sasl.login.connect.timeout.ms = null
+        sasl.login.read.timeout.ms = null
+        sasl.login.refresh.buffer.seconds = 300
+        sasl.login.refresh.min.period.seconds = 60
+        sasl.login.refresh.window.factor = 0.8
+        sasl.login.refresh.window.jitter = 0.05
+        sasl.login.retry.backoff.max.ms = 10000
+        sasl.login.retry.backoff.ms = 100
+        sasl.mechanism = GSSAPI
+        sasl.oauthbearer.clock.skew.seconds = 30
+        sasl.oauthbearer.expected.audience = null
+        sasl.oauthbearer.expected.issuer = null
+        sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+        sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+        sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+        sasl.oauthbearer.jwks.endpoint.url = null
+        sasl.oauthbearer.scope.claim.name = scope
+        sasl.oauthbearer.sub.claim.name = sub
+        sasl.oauthbearer.token.endpoint.url = null
+        security.protocol = PLAINTEXT
+        security.providers = null
+        send.buffer.bytes = 131072
+        socket.connection.setup.timeout.max.ms = 30000
+        socket.connection.setup.timeout.ms = 10000
+        ssl.cipher.suites = null
+        ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+        ssl.endpoint.identification.algorithm = https
+        ssl.engine.factory.class = null
+        ssl.key.password = null
+        ssl.keymanager.algorithm = SunX509
+        ssl.keystore.certificate.chain = null
+        ssl.keystore.key = null
+        ssl.keystore.location = null
+        ssl.keystore.password = null
+        ssl.keystore.type = JKS
+        ssl.protocol = TLSv1.3
+        ssl.provider = null
+        ssl.secure.random.implementation = null
+        ssl.trustmanager.algorithm = PKIX
+        ssl.truststore.certificates = null
+        ssl.truststore.location = null
+        ssl.truststore.password = null
+        ssl.truststore.type = JKS
+        transaction.timeout.ms = 60000
+        transactional.id = null
+        value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+2026-07-20T07:46:00.866Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.k.c.t.i.KafkaMetricsCollector        : initializing Kafka metrics collector
+2026-07-20T07:46:00.950Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] i.c.k.s.KafkaAvroSerializerConfig        : KafkaAvroSerializerConfig values: 
+        auto.register.schemas = true
+        avro.reflection.allow.null = false
+        avro.remove.java.properties = false
+        avro.use.logical.type.converters = false
+        basic.auth.credentials.source = URL
+        basic.auth.user.info = [hidden]
+        bearer.auth.cache.expiry.buffer.seconds = 300
+        bearer.auth.client.id = null
+        bearer.auth.client.secret = null
+        bearer.auth.credentials.source = STATIC_TOKEN
+        bearer.auth.custom.provider.class = null
+        bearer.auth.identity.pool.id = null
+        bearer.auth.issuer.endpoint.url = null
+        bearer.auth.logical.cluster = null
+        bearer.auth.scope = null
+        bearer.auth.scope.claim.name = scope
+        bearer.auth.sub.claim.name = sub
+        bearer.auth.token = [hidden]
+        context.name.strategy = class io.confluent.kafka.serializers.context.NullContextNameStrategy
+        http.connect.timeout.ms = 60000
+        http.read.timeout.ms = 60000
+        id.compatibility.strict = true
+        key.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+        latest.cache.size = 1000
+        latest.cache.ttl.sec = -1
+        latest.compatibility.strict = true
+        max.schemas.per.subject = 1000
+        normalize.schemas = false
+        proxy.host = 
+        proxy.port = -1
+        rule.actions = []
+        rule.executors = []
+        rule.service.loader.enable = true
+        schema.format = null
+        schema.reflection = false
+        schema.registry.basic.auth.user.info = [hidden]
+        schema.registry.ssl.cipher.suites = null
+        schema.registry.ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+        schema.registry.ssl.endpoint.identification.algorithm = https
+        schema.registry.ssl.engine.factory.class = null
+        schema.registry.ssl.key.password = null
+        schema.registry.ssl.keymanager.algorithm = SunX509
+        schema.registry.ssl.keystore.certificate.chain = null
+        schema.registry.ssl.keystore.key = null
+        schema.registry.ssl.keystore.location = null
+        schema.registry.ssl.keystore.password = null
+        schema.registry.ssl.keystore.type = JKS
+        schema.registry.ssl.protocol = TLSv1.3
+        schema.registry.ssl.provider = null
+        schema.registry.ssl.secure.random.implementation = null
+        schema.registry.ssl.trustmanager.algorithm = PKIX
+        schema.registry.ssl.truststore.certificates = null
+        schema.registry.ssl.truststore.location = null
+        schema.registry.ssl.truststore.password = null
+        schema.registry.ssl.truststore.type = JKS
+        schema.registry.url = [http://schema-registry.microservices-infra.svc.cluster.local:8081]
+        use.latest.version = false
+        use.latest.with.metadata = null
+        use.schema.id = -1
+        value.subject.name.strategy = class io.confluent.kafka.serializers.subject.TopicNameStrategy
+
+2026-07-20T07:46:01.044Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=order-service-producer-1] Instantiated an idempotent producer.
+2026-07-20T07:46:01.231Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.k.clients.producer.ProducerConfig    : These configurations '[schema.registry.url]' were supplied but are not used yet.
+2026-07-20T07:46:01.232Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.8.1
+2026-07-20T07:46:01.232Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 70d6ff42debf7e17
+2026-07-20T07:46:01.232Z  INFO 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1784533561232
+2026-07-20T07:46:01.318Z  INFO 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.Metadata        : [Producer clientId=order-service-producer-1] Cluster ID: kt2ZSOhVQ5G0qokBMG3slg
+2026-07-20T07:46:01.326Z  INFO 1 --- [order-service] [vice-producer-1] [                                                 ] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=order-service-producer-1] ProducerId set to 0 with epoch 0
+2026-07-20T07:46:01.440Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:01.557Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:01.745Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:01.950Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:02.417Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:03.375Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:04.379Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:05.272Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:06.155Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:07.157Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:08.161Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:09.163Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:10.165Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:11.167Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:12.172Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:13.174Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:14.175Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:15.177Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:16.191Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:17.183Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:18.188Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:19.192Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:20.211Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:21.211Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:22.237Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:23.241Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:24.241Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:25.243Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:26.248Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:27.245Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:28.247Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:29.251Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:30.252Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:31.255Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:32.256Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:33.260Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:34.263Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:35.265Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:36.273Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:37.290Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:38.294Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:39.295Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:40.296Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:41.301Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:42.304Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:43.308Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:44.312Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:45.314Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:46.324Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:47.305Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:48.307Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:49.309Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:50.311Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:51.310Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:52.313Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:53.316Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:54.319Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:55.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:56.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:57.326Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:58.325Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:46:59.329Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:00.332Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:01.276Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:01.458Z ERROR 1 --- [order-service] [nio-8081-exec-6] [6a5dd1fa9e25ad0dfd824c2f6678b7bd-35fa2d4ae0a47e70] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='null' and payload='{"orderNumber": "2e2fe43a-7af6-4b25-af03-52d91722e136", "email": "john.doe@example.com", "firstName"...' to topic order-placed:
+
+org.apache.kafka.common.errors.TimeoutException: Topic order-placed not present in metadata after 60000 ms.
+
+2026-07-20T07:47:01.490Z ERROR 1 --- [order-service] [nio-8081-exec-6] [                                                 ] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.kafka.KafkaException: Send failed] with root cause
+
+org.apache.kafka.common.errors.TimeoutException: Topic order-placed not present in metadata after 60000 ms.
+
+2026-07-20T07:47:02.225Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:03.257Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:04.258Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:05.258Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:06.262Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:07.264Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:08.270Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:09.267Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:10.267Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:11.269Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:12.272Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:13.275Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:14.277Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:15.279Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:16.280Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:17.272Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:18.281Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:19.308Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:20.309Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:21.309Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:22.313Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:23.315Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:24.316Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:25.317Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:26.320Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:27.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:28.327Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:29.240Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:30.251Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:31.254Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:32.256Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:33.256Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:34.257Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:35.259Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:36.260Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:37.263Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:38.264Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:39.271Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:40.267Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:41.268Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:42.272Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:43.274Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:44.274Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:45.292Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:46.295Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:47.296Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:48.303Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:49.305Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:50.299Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:51.299Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:52.301Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:53.302Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:54.304Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:55.307Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:56.311Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:57.314Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:58.316Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:47:59.324Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:00.319Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:01.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:02.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:03.321Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:04.325Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:05.325Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:06.329Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:07.331Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:08.335Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:09.347Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:10.339Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:11.340Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:12.344Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:13.348Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:14.351Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:15.354Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:16.357Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:17.358Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:18.360Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:19.305Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:20.246Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker: Name or service not known
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+        at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Unknown Source)
+        at java.base/java.net.InetAddress$PlatformResolver.lookupByName(Unknown Source)
+        at java.base/java.net.InetAddress.getAddressesFromNameService(Unknown Source)
+        at java.base/java.net.InetAddress$NameServiceAddresses.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:21.243Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:22.262Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
+
+2026-07-20T07:48:23.263Z  WARN 1 --- [order-service] [vice-producer-1] [                                                 ] org.apache.kafka.clients.NetworkClient   : [Producer clientId=order-service-producer-1] Error connecting to node broker:29092 (id: 1 rack: null)
+
+java.net.UnknownHostException: broker
+        at java.base/java.net.InetAddress$CachedLookup.get(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName0(Unknown Source)
+        at java.base/java.net.InetAddress.getAllByName(Unknown Source)
+        at org.apache.kafka.clients.DefaultHostResolver.resolve(DefaultHostResolver.java:27)
+        at org.apache.kafka.clients.ClientUtils.resolve(ClientUtils.java:124)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.resolveAddresses(ClusterConnectionStates.java:536)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.currentAddress(ClusterConnectionStates.java:511)
+        at org.apache.kafka.clients.ClusterConnectionStates$NodeConnectionState.access$200(ClusterConnectionStates.java:466)
+        at org.apache.kafka.clients.ClusterConnectionStates.currentAddress(ClusterConnectionStates.java:173)
+        at org.apache.kafka.clients.NetworkClient.initiateConnect(NetworkClient.java:1070)
+        at org.apache.kafka.clients.NetworkClient.access$800(NetworkClient.java:76)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1259)
+        at org.apache.kafka.clients.NetworkClient$DefaultMetadataUpdater.maybeUpdate(NetworkClient.java:1159)
+        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:592)
+        at org.apache.kafka.clients.producer.internals.Sender.runOnce(Sender.java:348)
+        at org.apache.kafka.clients.producer.internals.Sender.run(Sender.java:250)
+        at java.base/java.lang.Thread.run(Unknown Source)
