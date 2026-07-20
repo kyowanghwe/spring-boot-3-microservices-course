@@ -2,7 +2,7 @@ name: Build and Push Microservices
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'product-service/**'
       - 'order-service/**'
@@ -11,9 +11,6 @@ on:
       - 'api-gateway/**'
       - 'frontend/**'
       - 'pom.xml'
-
-env:
-  DOCKER_USERNAME: kyowanghwe99
 
 jobs:
   detect-changes:
@@ -82,26 +79,26 @@ jobs:
         if: matrix.changed == 'true'
         run: |
           mvn spring-boot:build-image -pl ${{ matrix.service }} -DskipTests \
-            -Dspring-boot.build-image.imageName=${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}
+            -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}
 
       - name: Login to Docker Hub
         if: matrix.changed == 'true'
         uses: docker/login-action@v3
         with:
-          username: ${{ env.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push image
         if: matrix.changed == 'true'
         run: |
-          docker tag ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }} ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:latest
-          docker push ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}
-          docker push ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:latest
 
       - name: Update manifests
         if: matrix.changed == 'true'
         run: |
-          sed -i "s|image: ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:.*|image: ${{ env.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}|" k8s/manifests/applications/${{ matrix.service }}.yml
+          sed -i "s|image: ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:.*|image: ${{ secrets.DOCKER_USERNAME }}/new-${{ matrix.service }}:${{ github.sha }}|" k8s/manifests/applications/${{ matrix.service }}.yml
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add k8s/manifests/
@@ -118,20 +115,20 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ env.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push frontend
         run: |
           cd frontend
-          docker build -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.sha }} .
-          docker tag ${{ env.DOCKER_USERNAME }}/frontend:${{ github.sha }} ${{ env.DOCKER_USERNAME }}/frontend:latest
-          docker push ${{ env.DOCKER_USERNAME }}/frontend:${{ github.sha }}
-          docker push ${{ env.DOCKER_USERNAME }}/frontend:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
 
       - name: Update manifests
         run: |
-          sed -i "s|image: ${{ env.DOCKER_USERNAME }}/frontend:.*|image: ${{ env.DOCKER_USERNAME }}/frontend:${{ github.sha }}|" k8s/manifests/applications/frontend.yml
+          sed -i "s|image: ${{ secrets.DOCKER_USERNAME }}/frontend:.*|image: ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}|" k8s/manifests/applications/frontend.yml
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add k8s/manifests/
