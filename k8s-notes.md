@@ -651,3 +651,120 @@ The API Gateway's circuit breaker tripped because it can't reach the target serv
 
 
 
+
+
+---
+
+## CI/CD with GitHub Actions + ArgoCD
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ GitHub                                                   │
+│                                                          │
+│  App Repo (code + manifests in same repo)                │
+│       │                          ▲                       │
+│       │ push code                │ update image tag      │
+│       ▼                          │                       │
+│  GitHub Actions ─────────────────┘                       │
+│       │                                                  │
+│       │ push image                                       │
+│       ▼                                                  │
+│  Docker Hub                                              │
+└─────────────────────────────────────────────────────────┘
+                    │
+                    │ ArgoCD watches k8s/manifests/ path
+                    ▼
+┌─────────────────────────────────────────────────────────┐
+│ Your Mac (Kind cluster)                                  │
+│                                                          │
+│  ArgoCD ──► detects new image tag ──► deploys to K8s     │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Flow
+
+1. Push code to `master` branch (e.g., change in `order-service/`)
+2. GitHub Actions detects which service changed (path filters)
+3. Builds Docker image with commit SHA tag
+4. Pushes image to Docker Hub
+5. Updates `k8s/manifests/applications/<service>.yml` with new image tag
+6. Pushes manifest change back to same repo
+7. ArgoCD (in Kind cluster) detects the manifest change
+8. ArgoCD pulls new image from Docker Hub and deploys to K8s
+
+### Mono-repo vs Two-repo
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| **Mono-repo** (what we use) | Simple, everything in one place | CI pushes to same repo, need path filters to avoid loops |
+| **Two repos** (production standard) | Clean separation, no loop risk | More repos to manage |
+
+### Avoiding Infinite Loops (Mono-repo)
+
+The workflow triggers ONLY on source code paths:
+
+```yaml
+on:
+  push:
+    paths:
+      - 'product-service/**'
+      - 'order-service/**'
+      - 'inventory-service/**'
+      - 'notification-service/**'
+      - 'api-gateway/**'
+      - 'frontend/**'
+      - 'pom.xml'
+```
+
+`k8s/manifests/**` is NOT in the list → CI commits to manifests don't re-trigger the workflow → no loop.
+
+### GitHub Secrets Required
+
+| Secret | Value |
+|--------|-------|
+| `DOCKER_USERNAME` | Docker Hub username |
+| `DOCKER_PASSWORD` | Docker Hub password or access token |
+
+### ArgoCD Setup on Kind
+
+```bash
+# Install ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# Wait for ready
+kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=300s
+
+# Get admin password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+# Port-forward UI
+kubectl port-forward svc/argocd-server -n argocd 8443:443
+# Access: https://localhost:8443 (admin / <password from above>)
+
+# Apply ArgoCD applications
+kubectl apply -f k8s/argocd/apps-application.yml
+kubectl apply -f k8s/argocd/infra-application.yml
+```
+
+### ArgoCD Application Config
+
+Points to subfolders in the same repo:
+
+```yaml
+spec:
+  source:
+    repoURL: https://github.com/kyowanghwe99/spring-boot-3-microservices-course.git
+    targetRevision: main
+    path: k8s/manifests/applications  # or k8s/manifests/infra
+  syncPolicy:
+    automated:
+      prune: true      # removes resources deleted from Git
+      selfHeal: true   # reverts manual kubectl changes
+```
+
+### Important: imagePullPolicy
+
+With ArgoCD pulling from Docker Hub, use `imagePullPolicy: Always` in manifests (not `IfNotPresent`). ArgoCD manages deployments — no more `kind load docker-image`.
