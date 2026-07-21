@@ -11,6 +11,7 @@ on:
       - 'api-gateway/**'
       - 'frontend/**'
       - 'pom.xml'
+      - '.github/workflows/**'
 
 jobs:
   detect-changes:
@@ -148,4 +149,3 @@ jobs:
           git add k8s/manifests/
           git commit -m "Update image tags to ${{ github.sha }}" || exit 0
           git push
-          
