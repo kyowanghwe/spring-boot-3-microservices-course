@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: kyowanghwe99/new-product-service:fc787e94d9072057bcf052a2bb0720dee2b9ab3a
+          image: kyowanghwe99/new-product-service:ed283fb179845a8833cceab37c9d668c16c64895
           imagePullPolicy: IfNotPresent
           resources:
             requests:
