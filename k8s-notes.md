@@ -1,5 +1,19 @@
 # Kubernetes Notes
 
+## Table of Contents
+
+1. [MySQL Deployment](#mysql-deployment-k8smanifestsinfrastructuremysqlyaml)
+2. [Kind (Kubernetes IN Docker)](#kind-kubernetes-in-docker)
+3. [Troubleshooting: Docker Desktop Containerd Image Store](#troubleshooting-docker-desktop-containerd-image-store)
+4. [Namespace Organization](#namespace-organization)
+5. [Applying Namespace Changes](#applying-namespace-changes)
+6. [Port-Forwarding Reference](#port-forwarding-reference)
+7. [Troubleshooting: Rebuilding & Reloading Images in Kind](#troubleshooting-rebuilding--reloading-images-in-kind)
+8. [Troubleshooting: 503 Service Unavailable (Circuit Breaker)](#troubleshooting-503-service-unavailable-circuit-breaker)
+9. [CI/CD with GitHub Actions + ArgoCD](#cicd-with-github-actions--argocd)
+
+---
+
 ## MySQL Deployment (`k8s/manifests/infrastructure/mysql.yaml`)
 
 This single file contains 6 Kubernetes resources that work together:
@@ -85,6 +99,7 @@ graph LR
 
 Both target the same MySQL behavior: files in `/docker-entrypoint-initdb.d/` run on first container start. They're separate because Docker Compose and K8s use different mechanisms to get files into containers.
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -349,6 +364,7 @@ kubectl rollout restart deployment api-gateway product-service order-service inv
 5. Deploy infrastructure: `kubectl apply -f k8s/manifests/infra/`
 6. Deploy applications: `kubectl apply -f k8s/manifests/applications/`
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -377,8 +393,7 @@ Docker Desktop has the **containerd image store** enabled (default in newer vers
    ```
 3. Re-run `./kind-load.sh` — images will load cleanly
 
-
-
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -465,6 +480,7 @@ kubectl get pods -n microservices-apps
 | `kubectl get pods --all-namespaces` | List pods across all namespaces |
 | `kubectl config set-context --current --namespace=<namespace>` | Set default namespace for kubectl |
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -509,6 +525,7 @@ These files contain `.default.svc.cluster.local` references that must be changed
 | `infra/grafana.yml` | `prometheus.default` → `prometheus.microservices-infra`, `tempo.default` → `tempo.microservices-infra`, `loki.default` → `loki.microservices-infra` |
 | `infra/prometheus.yml` | All app targets: `.default` → `.microservices-apps` |
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -587,6 +604,7 @@ kubectl exec -n microservices-apps deployment/api-gateway -- sh -c '
 '
 ```
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -635,6 +653,7 @@ kubectl get pods -n microservices-apps -l app=api-gateway -o jsonpath='{.items[0
 - Always verify with `imageID` after restart to confirm the new image is active
 - Alternative: use versioned tags (`v2`, `v3`) instead of `latest` to avoid caching issues entirely
 
+[↑ Back to top](#table-of-contents)
 
 ---
 
@@ -657,35 +676,45 @@ The API Gateway's circuit breaker tripped because it can't reach the target serv
 2. Check target service logs: `kubectl logs -n <namespace> deployment/<service> --tail=50`
 3. Fix the ConfigMap, re-apply, and restart the pod
 
-
-
-
+[↑ Back to top](#table-of-contents)
 
 ---
 
 ## CI/CD with GitHub Actions + ArgoCD
 
-### Architecture
+### Architecture (2-Branch Approach)
+
+```
+master (your code) ──► CI builds image ──► CI updates manifests on deploy branch
+                                                        │
+                                              ArgoCD watches deploy branch
+                                                        │
+                                              Deploys to K8s cluster
+```
+
+- **`master`** — source code only. You push here. Clean commit history.
+- **`deploy`** — K8s manifests with image tags. CI updates this automatically. You never touch it.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ GitHub                                                   │
 │                                                          │
-│  App Repo (code + manifests in same repo)                │
-│       │                          ▲                       │
-│       │ push code                │ update image tag      │
-│       ▼                          │                       │
-│  GitHub Actions ─────────────────┘                       │
+│  master branch (code only)                               │
 │       │                                                  │
-│       │ push image                                       │
+│       │ push code                                        │
 │       ▼                                                  │
-│  Docker Hub                                              │
+│  GitHub Actions                                          │
+│       │                                                  │
+│       ├── push image ──► Docker Hub                      │
+│       │                                                  │
+│       └── update manifests ──► deploy branch             │
+│                                                          │
 └─────────────────────────────────────────────────────────┘
                     │
-                    │ ArgoCD watches k8s/manifests/ path
+                    │ ArgoCD watches deploy branch
                     ▼
 ┌─────────────────────────────────────────────────────────┐
-│ Your Mac (Kind cluster)                                  │
+│ Kind cluster                                             │
 │                                                          │
 │  ArgoCD ──► detects new image tag ──► deploys to K8s     │
 └─────────────────────────────────────────────────────────┘
@@ -697,17 +726,19 @@ The API Gateway's circuit breaker tripped because it can't reach the target serv
 2. GitHub Actions detects which service changed (path filters)
 3. Builds Docker image with commit SHA tag
 4. Pushes image to Docker Hub
-5. Updates `k8s/manifests/applications/<service>.yml` with new image tag
-6. Pushes manifest change back to same repo
-7. ArgoCD (in Kind cluster) detects the manifest change
+5. Checks out `deploy` branch, updates `k8s/manifests/applications/<service>.yml` with new image tag
+6. Pushes manifest change to `deploy` branch (not master)
+7. ArgoCD (in Kind cluster) detects the manifest change on `deploy` branch
 8. ArgoCD pulls new image from Docker Hub and deploys to K8s
+
+> **Why 2 branches?** Keeps `master` history clean (no "Update image tags" noise from CI). The `deploy` branch is managed entirely by CI — you never push to it manually.
 
 ### Mono-repo vs Two-repo
 
 | Approach | Pros | Cons |
 |----------|------|------|
-| **Mono-repo** (what we use) | Simple, everything in one place | CI pushes to same repo, need path filters to avoid loops |
-| **Two repos** (production standard) | Clean separation, no loop risk | More repos to manage |
+| **Mono-repo, 2-branch** (what we use) | Simple, clean master history, one repo | deploy branch is auto-managed |
+| **Two repos** (production standard) | Clean separation, PR-based deploy approval | More repos to manage |
 
 ### Avoiding Infinite Loops (Mono-repo)
 
@@ -776,3 +807,5 @@ spec:
 ### Important: imagePullPolicy
 
 With ArgoCD pulling from Docker Hub, use `imagePullPolicy: Always` in manifests (not `IfNotPresent`). ArgoCD manages deployments — no more `kind load docker-image`.
+
+[↑ Back to top](#table-of-contents)
