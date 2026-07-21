@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: kyowanghwe99/new-api-gateway:7544f5a99420abeb942531537b5ada6b12db6db5
+          image: kyowanghwe99/new-api-gateway:fc787e94d9072057bcf052a2bb0720dee2b9ab3a
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000
