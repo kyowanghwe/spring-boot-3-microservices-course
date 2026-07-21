@@ -27,6 +27,9 @@
 <!--    <dockerPassword>${dockerPassword}</dockerPassword>-->
     <docker.image.prefix>kyowanghwe99</docker.image.prefix>
     <docker.image.tag>latest</docker.image.tag>
+    <spring-boot.build-image.imageName>
+      ${docker.image.prefix}/new-${project.artifactId}:${docker.image.tag}
+    </spring-boot.build-image.imageName>
   </properties>
   <build>
     <plugins>
@@ -35,7 +38,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <image>
-            <name>${docker.image.prefix}/new-${project.artifactId}:${docker.image.tag}</name>
+            <name>${spring-boot.build-image.imageName}</name>
             <builder>paketobuildpacks/builder-jammy-tiny</builder>
             <publish>false</publish>
           </image>
