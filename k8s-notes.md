@@ -535,11 +535,18 @@ These files contain `.default.svc.cluster.local` references that must be changed
 | Kafka UI | `kubectl port-forward -n microservices-infra svc/kafka-ui 8989:8080` | `localhost:8989` |
 | MongoDB | `kubectl port-forward -n microservices-infra svc/mongodb 27017:27017` | `localhost:27017` |
 | MySQL | `kubectl port-forward -n microservices-infra svc/mysql 3306:3306` | `localhost:3306` |
-| Loki | `kubectl port-forward -n microservices-infra svc/loki 3100:3100` | `localhost:3100` |
 | Tempo | `kubectl port-forward -n microservices-infra svc/tempo 3200:3200` | `localhost:3200` |
 | Schema Registry | `kubectl port-forward -n microservices-infra svc/schema-registry 8085:8081` | `localhost:8085` |
 
+### ArgoCD (`argocd`)
+
+| Service | Command | Local URL |
+|---------|---------|-----------|
+| ArgoCD Server | `kubectl port-forward -n argocd svc/argocd-server 8443:443` | `https://localhost:8443` |
+
 > **Note:** Keycloak uses local port `8181` and Kafka UI uses `8989` to avoid clashing with product-service on `8080`.
+
+> **Why no Loki port-forward?** Grafana connects to Loki internally within the cluster (`loki.microservices-infra.svc.cluster.local:3100`). You only need to port-forward Grafana to view logs. A Loki port-forward is only needed if you want to query Loki directly from your machine (e.g., with `curl` or `logcli`).
 
 ### All-in-One Background Script
 
@@ -551,6 +558,7 @@ kubectl port-forward -n microservices-infra svc/grafana 3000:3000 &
 kubectl port-forward -n microservices-infra svc/keycloak 8181:8080 &
 kubectl port-forward -n microservices-infra svc/kafka-ui 8989:8080 &
 kubectl port-forward -n microservices-infra svc/prometheus 9090:9090 &
+kubectl port-forward -n argocd svc/argocd-server 8443:443 &
 
 # Stop all port-forwards
 kill $(jobs -p)
