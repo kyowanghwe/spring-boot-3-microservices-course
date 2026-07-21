@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: kyowanghwe99/frontend:latest
+          image: kyowanghwe99/frontend:a2d4412356d6f978846d6492875a41648149084a
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
