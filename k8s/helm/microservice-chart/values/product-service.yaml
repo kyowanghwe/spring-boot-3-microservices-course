@@ -1,0 +1,37 @@
+# Product Service values
+# CI updates ONLY the 'version' field
+
+name: product-service
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+
+image:
+  repository: kyowanghwe99/new-product-service
+  pullPolicy: IfNotPresent
+
+replicas: 1
+port: 8080
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "768Mi"
+    cpu: "500m"
+
+# Env vars from common-config
+commonConfigKeys:
+  - name: LOKI_URL
+    key: LOKI_URL
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+
+# Env vars from service-specific ConfigMap
+envFromConfigMap:
+  - name: SPRING_DATA_MONGODB_URI
+    configMapName: product-service-config
+    configMapKey: SPRING_DATA_MONGODB_URI
+
+# Service-specific ConfigMap
+configMapData:
+  SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb.microservices-infra.svc.cluster.local:27017/product-service?authSource=admin"

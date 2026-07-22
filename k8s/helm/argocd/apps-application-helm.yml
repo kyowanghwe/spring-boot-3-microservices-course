@@ -1,11 +1,11 @@
 # ============================================================
-# HELM VERSION — ArgoCD ApplicationSet
+# HELM VERSION — ArgoCD ApplicationSet (Applications)
 # ============================================================
-# This is the Helm-based alternative to k8s/argocd/apps-application.yml
-# One ApplicationSet generates an Application per service automatically.
+# Deploys all microservices using the shared Helm chart.
+# Values files are INSIDE the chart: microservice-chart/values/<service>.yaml
 #
 # Requires: ArgoCD v2.3+ (ApplicationSet CRD included in standard install)
-# Install/upgrade ArgoCD:
+# Install/upgrade ArgoCD (must use --server-side to avoid annotation size limit error):
 #   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --server-side
 #
 # To use:
@@ -29,7 +29,7 @@ spec:
           - service: common-config
   template:
     metadata:
-      name: "{{service}}"
+      name: "{{service}}-helm"
       namespace: argocd
     spec:
       project: default
@@ -39,7 +39,7 @@ spec:
         path: k8s/helm/microservice-chart
         helm:
           valueFiles:
-            - ../../values/{{service}}-values.yaml
+            - values/{{service}}.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: microservices-apps
@@ -49,3 +49,30 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+---
+# ============================================================
+# INFRA — Still uses raw manifests (no Helm needed for infra)
+# ============================================================
+# Infrastructure services (kafka, mysql, mongodb, etc.) don't change
+# image tags via CI, so raw manifests are fine for them.
+# ============================================================
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microservices-infra
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kyowanghwe/spring-boot-3-microservices-course.git
+    targetRevision: deploy
+    path: k8s/manifests/infra
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: microservices-infra
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
