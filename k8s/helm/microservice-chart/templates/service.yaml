@@ -1,0 +1,15 @@
+{{- if .Values.port }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ .Values.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
+{{- end }}

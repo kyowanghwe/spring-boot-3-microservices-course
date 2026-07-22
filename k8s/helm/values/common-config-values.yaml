@@ -1,0 +1,21 @@
+# Shared ConfigMap deployed once for all services
+# This creates the common-config ConfigMap
+
+name: common-config-holder
+version: "1.0.0"
+
+# No deployment/service needed for this — just the ConfigMap
+replicas: 0
+port: null
+resources: null
+commonConfigKeys: []
+envFromConfigMap: []
+
+# The common-config ConfigMap data
+commonConfig:
+  LOKI_URL: "http://loki.microservices-infra.svc.cluster.local:3100/loki/api/v1/push"
+  MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "http://tempo.microservices-infra.svc.cluster.local:9411"
+  PRODUCT_SERVICE_URL: "http://product-service:8080"
+  ORDER_SERVICE_URL: "http://order-service:8081"
+  INVENTORY_SERVICE_URL: "http://inventory-service:8082"
+  SPRING_KAFKA_BOOTSTRAP-SERVERS: "broker.microservices-infra.svc.cluster.local:29092"

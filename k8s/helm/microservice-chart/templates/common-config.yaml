@@ -1,0 +1,10 @@
+{{- if .Values.commonConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-config
+data:
+  {{- range $key, $value := .Values.commonConfig }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}

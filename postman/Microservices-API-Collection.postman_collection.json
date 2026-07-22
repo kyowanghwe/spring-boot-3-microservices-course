@@ -1,0 +1,605 @@
+{
+  "info": {
+    "name": "Spring Boot Microservices",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Complete API collection for the Spring Boot 3 Microservices project.\n\nServices:\n- Product Service (port 8080)\n- Order Service (port 8081)\n- Inventory Service (port 8082)\n- API Gateway (port 9000)\n\nUse the environment variables to switch between direct service access and gateway access.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [],
+  "item": [
+    {
+      "name": "🔐 Auth (Keycloak)",
+      "description": "Get OAuth2 tokens from Keycloak. Use these when security is enabled on the API Gateway.",
+      "item": [
+        {
+          "name": "Get Token (Client Credentials)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set('access_token', jsonData.access_token);",
+                  "pm.test('Token received', function() {",
+                  "    pm.expect(jsonData.access_token).to.not.be.undefined;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                },
+                {
+                  "key": "client_id",
+                  "value": "spring-cloud-client-id"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{keycloak_client_secret}}"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_url}}/realms/spring-microservices-security-realm/protocol/openid-connect/token",
+              "host": ["{{keycloak_url}}"],
+              "path": ["realms", "spring-microservices-security-realm", "protocol", "openid-connect", "token"]
+            },
+            "description": "Get an access token using client_credentials grant.\n\nSet `keycloak_client_secret` in your environment (check Keycloak admin console > Clients > spring-cloud-client-id > Credentials)."
+          }
+        },
+        {
+          "name": "Get Token (Password Grant — User Login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set('access_token', jsonData.access_token);",
+                  "pm.test('Token received', function() {",
+                  "    pm.expect(jsonData.access_token).to.not.be.undefined;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                },
+                {
+                  "key": "client_id",
+                  "value": "angular-client"
+                },
+                {
+                  "key": "username",
+                  "value": "{{keycloak_username}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{keycloak_password}}"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_url}}/realms/spring-microservices-security-realm/protocol/openid-connect/token",
+              "host": ["{{keycloak_url}}"],
+              "path": ["realms", "spring-microservices-security-realm", "protocol", "openid-connect", "token"]
+            },
+            "description": "Get an access token using password grant (direct user login).\n\nRequires a user created in Keycloak realm. Uses the public `angular-client` (no secret needed)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Product Service",
+      "description": "CRUD operations for products. Products are stored in MongoDB.",
+      "item": [
+        {
+          "name": "Create Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201 Created', function() {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.id) {",
+                  "    pm.environment.set('product_id', jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro\",\n  \"description\": \"Apple iPhone 15 Pro 256GB\",\n  \"skuCode\": \"iphone_15_pro\",\n  \"price\": 1299.99\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/product",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "product"]
+            },
+            "description": "Create a new product.\n\nFields:\n- `name` (String) — Product name\n- `description` (String) — Product description\n- `skuCode` (String) — Unique SKU identifier\n- `price` (BigDecimal) — Product price\n\nNote: `id` is auto-generated by MongoDB."
+          }
+        },
+        {
+          "name": "Create Product — Samsung Galaxy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Samsung Galaxy S24 Ultra\",\n  \"description\": \"Samsung Galaxy S24 Ultra 512GB Titanium\",\n  \"skuCode\": \"samsung_galaxy_s24_ultra\",\n  \"price\": 1419.99\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/product",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "product"]
+            }
+          }
+        },
+        {
+          "name": "Create Product — MacBook Pro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MacBook Pro 16 M3\",\n  \"description\": \"Apple MacBook Pro 16-inch M3 Max 48GB RAM\",\n  \"skuCode\": \"macbook_pro_16_m3\",\n  \"price\": 3499.00\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/product",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "product"]
+            }
+          }
+        },
+        {
+          "name": "Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200 OK', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response is an array', function() {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/api/product",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "product"]
+            },
+            "description": "Get all products from MongoDB.\n\nReturns: Array of ProductResponse objects."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 Order Service",
+      "description": "Place orders. Order Service checks inventory availability and sends Kafka event for notification.",
+      "item": [
+        {
+          "name": "Place Order — iPhone",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 201 Created', function() {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Order placed successfully', function() {",
+                  "    pm.expect(pm.response.text()).to.include('Order Placed Successfully');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skuCode\": \"iphone_15_pro\",\n  \"price\": 1299.99,\n  \"quantity\": 1,\n  \"userDetails\": {\n    \"email\": \"test@example.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/order",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "order"]
+            },
+            "description": "Place a new order.\n\nFields:\n- `skuCode` (String) — Must match an existing product SKU\n- `price` (BigDecimal) — Order price\n- `quantity` (Integer) — Quantity to order\n- `userDetails.email` (String) — Email for notification\n- `userDetails.firstName` (String)\n- `userDetails.lastName` (String)\n\nFlow:\n1. Checks inventory via Inventory Service\n2. If in stock → saves order to MySQL\n3. Sends OrderPlacedEvent to Kafka topic `order-placed`\n4. Notification Service consumes event and sends email"
+          }
+        },
+        {
+          "name": "Place Order — Samsung Galaxy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skuCode\": \"samsung_galaxy_s24_ultra\",\n  \"price\": 1419.99,\n  \"quantity\": 2,\n  \"userDetails\": {\n    \"email\": \"jane.doe@example.com\",\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/order",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "order"]
+            }
+          }
+        },
+        {
+          "name": "Place Order — Out of Stock Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// This should fail if the SKU doesn't exist in inventory",
+                  "pm.test('Order response received', function() {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skuCode\": \"nonexistent_product_xyz\",\n  \"price\": 999.99,\n  \"quantity\": 100,\n  \"userDetails\": {\n    \"email\": \"test@example.com\",\n    \"firstName\": \"Test\",\n    \"lastName\": \"User\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{gateway_url}}/api/order",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "order"]
+            },
+            "description": "Test placing an order for a SKU that doesn't exist in inventory. Should trigger the inventory check failure path."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Inventory Service",
+      "description": "Check product stock availability. Called internally by Order Service, but can be tested directly.",
+      "item": [
+        {
+          "name": "Check Stock — In Stock",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200 OK', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns boolean', function() {",
+                  "    var body = pm.response.text();",
+                  "    pm.expect(body === 'true' || body === 'false').to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/api/inventory?skuCode=iphone_15_pro&quantity=1",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "inventory"],
+              "query": [
+                {
+                  "key": "skuCode",
+                  "value": "iphone_15_pro"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Check if a product is in stock.\n\nQuery params:\n- `skuCode` (String) — The product SKU to check\n- `quantity` (Integer) — Quantity needed\n\nReturns: `true` if in stock, `false` if not."
+          }
+        },
+        {
+          "name": "Check Stock — Large Quantity (Likely Out of Stock)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/api/inventory?skuCode=iphone_15_pro&quantity=9999",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "inventory"],
+              "query": [
+                {
+                  "key": "skuCode",
+                  "value": "iphone_15_pro"
+                },
+                {
+                  "key": "quantity",
+                  "value": "9999"
+                }
+              ]
+            },
+            "description": "Test with a large quantity that likely exceeds stock."
+          }
+        },
+        {
+          "name": "Check Stock — Non-existent SKU",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/api/inventory?skuCode=does_not_exist&quantity=1",
+              "host": ["{{gateway_url}}"],
+              "path": ["api", "inventory"],
+              "query": [
+                {
+                  "key": "skuCode",
+                  "value": "does_not_exist"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Test with a SKU that doesn't exist in the inventory database."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏥 Health Checks",
+      "description": "Actuator health endpoints for each service.",
+      "item": [
+        {
+          "name": "API Gateway Health",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/actuator/health",
+              "host": ["{{gateway_url}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        },
+        {
+          "name": "Product Service Health (Direct)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{product_service_url}}/actuator/health",
+              "host": ["{{product_service_url}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        },
+        {
+          "name": "Order Service Health (Direct)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{order_service_url}}/actuator/health",
+              "host": ["{{order_service_url}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        },
+        {
+          "name": "Inventory Service Health (Direct)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{inventory_service_url}}/actuator/health",
+              "host": ["{{inventory_service_url}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📖 Swagger / API Docs",
+      "description": "OpenAPI documentation endpoints via API Gateway aggregation.",
+      "item": [
+        {
+          "name": "Product Service API Docs",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/aggregate/product-service/v3/api-docs",
+              "host": ["{{gateway_url}}"],
+              "path": ["aggregate", "product-service", "v3", "api-docs"]
+            },
+            "description": "Get OpenAPI spec for Product Service (routed through gateway)."
+          }
+        },
+        {
+          "name": "Order Service API Docs",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/aggregate/order-service/v3/api-docs",
+              "host": ["{{gateway_url}}"],
+              "path": ["aggregate", "order-service", "v3", "api-docs"]
+            },
+            "description": "Get OpenAPI spec for Order Service (routed through gateway)."
+          }
+        },
+        {
+          "name": "Inventory Service API Docs",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/aggregate/inventory-service/v3/api-docs",
+              "host": ["{{gateway_url}}"],
+              "path": ["aggregate", "inventory-service", "v3", "api-docs"]
+            },
+            "description": "Get OpenAPI spec for Inventory Service (routed through gateway)."
+          }
+        },
+        {
+          "name": "Swagger UI (Browser)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/swagger-ui.html",
+              "host": ["{{gateway_url}}"],
+              "path": ["swagger-ui.html"]
+            },
+            "description": "Open in browser for interactive Swagger UI."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📈 Observability",
+      "description": "Prometheus metrics and Grafana endpoints.",
+      "item": [
+        {
+          "name": "Prometheus Metrics (Gateway)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{gateway_url}}/actuator/prometheus",
+              "host": ["{{gateway_url}}"],
+              "path": ["actuator", "prometheus"]
+            }
+          }
+        },
+        {
+          "name": "Grafana Home",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{grafana_url}}/api/health",
+              "host": ["{{grafana_url}}"],
+              "path": ["api", "health"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
