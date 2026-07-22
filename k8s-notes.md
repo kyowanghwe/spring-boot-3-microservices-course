@@ -11,6 +11,7 @@
 7. [Troubleshooting: Rebuilding & Reloading Images in Kind](#troubleshooting-rebuilding--reloading-images-in-kind)
 8. [Troubleshooting: 503 Service Unavailable (Circuit Breaker)](#troubleshooting-503-service-unavailable-circuit-breaker)
 9. [CI/CD with GitHub Actions + ArgoCD](#cicd-with-github-actions--argocd)
+10. [Helm Charts — Template-Based Deployment](#helm-charts--template-based-deployment)
 
 ---
 
@@ -807,5 +808,255 @@ spec:
 ### Important: imagePullPolicy
 
 With ArgoCD pulling from Docker Hub, use `imagePullPolicy: Always` in manifests (not `IfNotPresent`). ArgoCD manages deployments — no more `kind load docker-image`.
+
+[↑ Back to top](#table-of-contents)
+
+
+---
+
+## Helm Charts — Template-Based Deployment
+
+### What Is Helm?
+
+Helm is a **templating engine** for Kubernetes. Instead of writing complete YAML manifests for every service, you write ONE template and feed different values into it per service.
+
+**Analogy:** Mail merge in Word. One letter template + a list of names = many personalized letters.
+
+```
+Template (Dear {{name}})  +  Values (name: John)  =  Output (Dear John)
+Helm Template             +  Values File           =  Complete K8s YAML
+```
+
+### Why Use Helm?
+
+| Without Helm | With Helm |
+|---|---|
+| 6 services = 6 full manifests (~100 lines each) | 6 services = 1 template + 6 small values files (~30 lines each) |
+| Change a label? Edit 6 files | Change a label? Edit 1 template |
+| Easy for things to drift between services | Template enforces consistency |
+| CI updates full `image:` line via sed | CI updates only `version:` field |
+
+### Chart Structure (Our Project)
+
+```
+k8s/helm/
+├── microservice-chart/              ← THE SHARED TEMPLATE (like a class definition)
+│   ├── Chart.yaml                   ← Metadata (chart name, version)
+│   ├── values.yaml                  ← Default values (overridden per service)
+│   └── templates/                   ← Go templates that produce K8s YAML
+│       ├── _helpers.tpl             ← Reusable snippets (functions)
+│       ├── deployment.yaml          ← Deployment template
+│       ├── service.yaml             ← Service template
+│       ├── configmap.yaml           ← Per-service ConfigMap template
+│       └── common-config.yaml       ← Shared ConfigMap template
+├── values/                          ← PER-SERVICE VALUES (like constructor arguments)
+│   ├── api-gateway-values.yaml
+│   ├── product-service-values.yaml
+│   ├── order-service-values.yaml
+│   ├── inventory-service-values.yaml
+│   ├── notification-service-values.yaml
+│   ├── frontend-values.yaml
+│   └── common-config-values.yaml
+└── argocd/
+    └── apps-application-helm.yml    ← ArgoCD config (Helm version)
+```
+
+### The 3 Essential Files Explained
+
+#### 1. `Chart.yaml` — "Who am I?"
+
+Just metadata. Like `package.json`'s name/version fields.
+
+```yaml
+apiVersion: v2
+name: microservice
+description: A shared Helm chart for all microservices
+version: 1.0.0        # chart version (how you version the template itself)
+appVersion: "1.0.0"   # not used for image tags in our setup
+```
+
+#### 2. `values.yaml` — "What are the defaults?"
+
+Default data that templates use. Each service overrides these with its own values file.
+
+```yaml
+name: my-service              # overridden to "order-service", "api-gateway", etc.
+version: latest               # overridden by CI to the git SHA
+image:
+  repository: kyowanghwe99/my-service
+  pullPolicy: IfNotPresent
+replicas: 1
+port: 8080
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+```
+
+#### 3. `templates/*.yaml` — "What does the output look like?"
+
+These are Go templates with `{{ }}` placeholders. Helm replaces them with values at render time.
+
+```yaml
+# templates/deployment.yaml
+containers:
+  - name: {{ .Values.name }}
+    image: "{{ .Values.image.repository }}:{{ .Values.version }}"
+    ports:
+      - containerPort: {{ .Values.port }}
+```
+
+With `notification-service-values.yaml`, this becomes:
+
+```yaml
+containers:
+  - name: notification-service
+    image: "kyowanghwe99/new-notification-service:ed283fb..."
+    ports:
+      - containerPort: 8083
+```
+
+### `_helpers.tpl` — Reusable Template Functions
+
+The `_` prefix means **"don't output this as a K8s resource."** It's a file for defining reusable snippets — like utility functions in code.
+
+**Why it exists:** Avoid repeating the same YAML blocks in multiple templates.
+
+#### Define (in `_helpers.tpl`):
+
+```yaml
+{{- define "microservice.labels" -}}
+app: {{ .Values.name }}
+chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+managed-by: Helm
+{{- end }}
+```
+
+#### Call (in `deployment.yaml` and `service.yaml`):
+
+```yaml
+metadata:
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+```
+
+#### Output (for notification-service):
+
+```yaml
+metadata:
+  labels:
+    app: notification-service
+    chart: microservice-1.0.0
+    managed-by: Helm
+```
+
+**It's exactly like a function:** `define` = declare, `include` = call.
+
+| Code Concept | Helm Equivalent |
+|---|---|
+| `function getLabels() { return {...} }` | `{{- define "microservice.labels" -}} ... {{- end }}` |
+| `const labels = getLabels()` | `{{- include "microservice.labels" . }}` |
+| Function parameter | The `.` passed to include (current context with all values) |
+
+### Helm Template Syntax Cheat Sheet
+
+| Syntax | Meaning | Example Output |
+|---|---|---|
+| `{{ .Values.name }}` | Read from values file | `notification-service` |
+| `{{ .Chart.Name }}` | Read from Chart.yaml | `microservice` |
+| `{{ .Chart.Version }}` | Chart version | `1.0.0` |
+| `{{- if .Values.port }}` | Only render block if port exists | Skips entire section if null |
+| `{{- range .Values.list }}` | Loop over a list | Renders one block per item |
+| `{{- include "name" . }}` | Call a helper function | Inserts the snippet output |
+| `{{ toYaml .Values.x \| nindent 8 }}` | Convert object to YAML, indent 8 spaces | Nested YAML block |
+| `{{ .Values.x \| quote }}` | Wrap value in quotes | `"my-value"` |
+
+**The `{{-` (with dash):** Trims whitespace before/after the tag. Without it, you get blank lines in output.
+
+### How Helm Renders — The Full Flow
+
+```
+COMMAND:
+  helm template notification ./microservice-chart -f values/notification-service-values.yaml
+
+WHAT HAPPENS:
+  ┌─────────────────────────────────┐
+  │ 1. Load Chart.yaml (metadata)   │
+  │ 2. Load values.yaml (defaults)  │
+  │ 3. Load notification-service-   │
+  │    values.yaml (overrides)      │
+  │ 4. Register _helpers.tpl        │
+  │ 5. For each template file:      │
+  │    - Replace {{ }} with values  │
+  │    - Output pure K8s YAML       │
+  └─────────────┬───────────────────┘
+                │
+                ▼
+  Complete Deployment + Service + ConfigMap YAML
+  (ready for kubectl apply or ArgoCD)
+```
+
+### Values Override Order
+
+```
+values.yaml (lowest priority — defaults)
+     ↓ overridden by
+values/notification-service-values.yaml (per-service file)
+     ↓ overridden by
+--set name=foo (command line, highest priority)
+```
+
+### How CI Updates Work (Helm vs Raw Manifests)
+
+**Before (raw manifests):**
+```bash
+# CI replaces the ENTIRE image line
+sed -i "s|image: kyowanghwe99/new-notification-service:.*|image: kyowanghwe99/new-notification-service:abc123|" notification-service.yml
+```
+
+**After (Helm):**
+```bash
+# CI replaces ONLY the version line in the values file
+sed -i "s|^version:.*|version: abc123|" notification-service-values.yaml
+```
+
+The image repository, resources, ports, env vars — all untouched. CI only touches the version, Helm handles the rest.
+
+### Testing Locally
+
+```bash
+# See what Helm would generate (dry-run, no deploy):
+helm template notification k8s/helm/microservice-chart -f k8s/helm/values/notification-service-values.yaml
+
+# Render all services:
+for svc in api-gateway product-service order-service inventory-service notification-service frontend; do
+  echo "=== $svc ==="
+  helm template $svc k8s/helm/microservice-chart -f k8s/helm/values/${svc}-values.yaml
+  echo ""
+done
+```
+
+### How to Switch from Raw Manifests to Helm
+
+1. Apply the Helm ArgoCD ApplicationSet:
+   ```bash
+   kubectl apply -f k8s/helm/argocd/apps-application-helm.yml
+   ```
+2. Remove the old raw-manifest Application:
+   ```bash
+   kubectl delete -f k8s/argocd/apps-application.yml
+   ```
+3. Switch CI workflow: rename `build-and-push-helm.yml` → `build-and-push.yml`
+
+### Comparison Summary
+
+| Aspect | Raw Manifests (`k8s/manifests/`) | Helm (`k8s/helm/`) |
+|--------|----------------------------------|---------------------|
+| What's stored | Complete K8s YAML per service | Template + values (rendered at deploy) |
+| What CI touches | Full `image:` line | Only `version:` field |
+| Adding a service | Copy 80-line manifest, edit everything | Create 30-line values file |
+| Global change (labels, probes) | Edit every manifest | Edit 1 template |
+| ArgoCD syncs | Raw YAML as-is | Runs `helm template` first, applies output |
+| Best for | Learning, simple setups | Production, many services, teams |
 
 [↑ Back to top](#table-of-contents)
