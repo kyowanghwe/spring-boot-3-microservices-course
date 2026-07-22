@@ -11,22 +11,22 @@ k8s/helm/
 ├── microservice-chart/          # Shared Helm chart (THE TEMPLATE)
 │   ├── Chart.yaml               # Chart metadata
 │   ├── values.yaml              # Default values (overridden per service)
+│   ├── values/                  # Per-service values (WHAT CI UPDATES)
+│   │   ├── api-gateway.yaml
+│   │   ├── product-service.yaml
+│   │   ├── order-service.yaml
+│   │   ├── inventory-service.yaml
+│   │   ├── notification-service.yaml
+│   │   ├── frontend.yaml
+│   │   └── common-config.yaml
 │   └── templates/
 │       ├── _helpers.tpl         # Template helper functions
 │       ├── deployment.yaml      # Deployment template
 │       ├── service.yaml         # Service template
 │       ├── configmap.yaml       # Per-service ConfigMap template
 │       └── common-config.yaml   # Shared ConfigMap template
-├── values/                      # Per-service values (WHAT CI UPDATES)
-│   ├── api-gateway-values.yaml
-│   ├── product-service-values.yaml
-│   ├── order-service-values.yaml
-│   ├── inventory-service-values.yaml
-│   ├── notification-service-values.yaml
-│   ├── frontend-values.yaml
-│   └── common-config-values.yaml
 ├── argocd/
-│   └── apps-application-helm.yml  # ArgoCD ApplicationSet (Helm version)
+│   └── apps-application-helm.yml  # ArgoCD ApplicationSet + Infra Application
 └── README.md
 ```
 
@@ -82,11 +82,11 @@ k8s/helm/
 
 ```bash
 # Render what Helm would generate for notification-service:
-helm template notification k8s/helm/microservice-chart -f k8s/helm/values/notification-service-values.yaml
+helm template notification k8s/helm/microservice-chart -f k8s/helm/microservice-chart/values/notification-service.yaml
 
 # Render all services:
 for svc in api-gateway product-service order-service inventory-service notification-service frontend; do
   echo "=== $svc ==="
-  helm template $svc k8s/helm/microservice-chart -f k8s/helm/values/${svc}-values.yaml
+  helm template $svc k8s/helm/microservice-chart -f k8s/helm/microservice-chart/values/${svc}.yaml
 done
 ```

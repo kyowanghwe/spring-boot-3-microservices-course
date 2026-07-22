@@ -157,19 +157,19 @@ jobs:
           for i in "${!services[@]}"; do
             if [ "${changed[$i]}" == "true" ]; then
               # Only update the version line — everything else stays untouched
-              sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/values/${services[$i]}-values.yaml
+              sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservice-chart/values/${services[$i]}.yaml
             fi
           done
 
       - name: Update frontend values file (version only)
         if: needs.build-frontend.result == 'success'
         run: |
-          sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/values/frontend-values.yaml
+          sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservice-chart/values/frontend.yaml
 
       - name: Commit and push to deploy branch
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add k8s/helm/values/
+          git add k8s/helm/
           git commit -m "deploy(helm): update version to ${{ github.sha }}" || exit 0
           git push origin deploy
