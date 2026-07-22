@@ -1,0 +1,37 @@
+# Inventory Service values
+# CI updates ONLY the 'version' field
+
+name: inventory-service
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+
+image:
+  repository: kyowanghwe99/new-inventory-service
+  pullPolicy: IfNotPresent
+
+replicas: 1
+port: 8082
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "768Mi"
+    cpu: "500m"
+
+# Env vars from common-config
+commonConfigKeys:
+  - name: LOKI_URL
+    key: LOKI_URL
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+
+# Env vars from service-specific ConfigMap
+envFromConfigMap:
+  - name: SPRING_DATASOURCE_URL
+    configMapName: inventory-service-config
+    configMapKey: SPRING_DATASOURCE_URL
+
+# Service-specific ConfigMap
+configMapData:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/inventory_service"

@@ -1,0 +1,43 @@
+# API Gateway values
+# CI updates ONLY the 'version' field
+
+name: api-gateway
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+
+image:
+  repository: kyowanghwe99/new-api-gateway
+  pullPolicy: IfNotPresent
+
+replicas: 1
+port: 9000
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "768Mi"
+    cpu: "500m"
+
+# Env vars from common-config
+commonConfigKeys:
+  - name: LOKI_URL
+    key: LOKI_URL
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+  - name: PRODUCT_SERVICE_URL
+    key: PRODUCT_SERVICE_URL
+  - name: ORDER_SERVICE_URL
+    key: ORDER_SERVICE_URL
+  - name: INVENTORY_SERVICE_URL
+    key: INVENTORY_SERVICE_URL
+
+# Env vars from service-specific ConfigMap
+envFromConfigMap:
+  - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+    configMapName: api-gateway-config
+    configMapKey: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+
+# Service-specific ConfigMap
+configMapData:
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.microservices-infra.svc.cluster.local:8080/realms/spring-microservices-security-realm"

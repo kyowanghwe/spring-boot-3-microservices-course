@@ -1,0 +1,51 @@
+# ============================================================
+# HELM VERSION — ArgoCD ApplicationSet
+# ============================================================
+# This is the Helm-based alternative to k8s/argocd/apps-application.yml
+# One ApplicationSet generates an Application per service automatically.
+#
+# Requires: ArgoCD v2.3+ (ApplicationSet CRD included in standard install)
+# Install/upgrade ArgoCD:
+#   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --server-side
+#
+# To use:
+#   kubectl apply -f k8s/helm/argocd/apps-application-helm.yml
+# ============================================================
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices-apps-helm
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - service: api-gateway
+          - service: product-service
+          - service: order-service
+          - service: inventory-service
+          - service: notification-service
+          - service: frontend
+          - service: common-config
+  template:
+    metadata:
+      name: "{{service}}"
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/kyowanghwe/spring-boot-3-microservices-course.git
+        targetRevision: deploy
+        path: k8s/helm/microservice-chart
+        helm:
+          valueFiles:
+            - ../../values/{{service}}-values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: microservices-apps
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

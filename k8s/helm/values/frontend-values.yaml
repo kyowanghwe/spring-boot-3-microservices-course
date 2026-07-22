@@ -1,0 +1,19 @@
+# Frontend values
+# CI updates ONLY the 'version' field
+
+name: frontend
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+
+image:
+  repository: kyowanghwe99/frontend
+  pullPolicy: IfNotPresent
+
+replicas: 1
+port: 80
+
+# Frontend doesn't need heavy resources
+resources: null
+
+# No config injection needed for frontend
+commonConfigKeys: []
+envFromConfigMap: []

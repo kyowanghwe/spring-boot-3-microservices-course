@@ -1,0 +1,45 @@
+# Order Service values
+# CI updates ONLY the 'version' field
+
+name: order-service
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+
+image:
+  repository: kyowanghwe99/new-order-service
+  pullPolicy: IfNotPresent
+
+replicas: 1
+port: 8081
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "768Mi"
+    cpu: "500m"
+
+# Env vars from common-config
+commonConfigKeys:
+  - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+    key: SPRING_KAFKA_BOOTSTRAP-SERVERS
+  - name: LOKI_URL
+    key: LOKI_URL
+  - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+  - name: INVENTORY_SERVICE_URL
+    key: INVENTORY_SERVICE_URL
+
+# Env vars from service-specific ConfigMap
+envFromConfigMap:
+  - name: SPRING_DATASOURCE_URL
+    configMapName: order-service-config
+    configMapKey: SPRING_DATASOURCE_URL
+  - name: SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL
+    configMapName: order-service-config
+    configMapKey: SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL
+
+# Service-specific ConfigMap
+configMapData:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/order_service"
+  SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.microservices-infra.svc.cluster.local:8081"

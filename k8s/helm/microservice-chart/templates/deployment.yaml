@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "microservice.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.version }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.port }}
+          ports:
+            - containerPort: {{ .Values.port }}
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          {{- if or .Values.commonConfigKeys .Values.envFromConfigMap }}
+          env:
+            {{- range .Values.commonConfigKeys }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: common-config
+                  key: {{ .key }}
+            {{- end }}
+            {{- range .Values.envFromConfigMap }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .configMapName }}
+                  key: {{ .configMapKey }}
+            {{- end }}
+          {{- end }}
