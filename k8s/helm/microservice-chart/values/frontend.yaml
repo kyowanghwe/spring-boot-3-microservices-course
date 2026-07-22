@@ -2,7 +2,7 @@
 # CI updates ONLY the 'version' field
 
 name: frontend
-version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+version: fc6cf7a5f0cdaba445628d677dacb035f6083876  # ← CI overwrites this
 
 image:
   repository: kyowanghwe99/frontend
