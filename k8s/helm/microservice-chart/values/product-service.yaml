@@ -2,7 +2,7 @@
 # CI updates ONLY the 'version' field
 
 name: product-service
-version: fc6cf7a5f0cdaba445628d677dacb035f6083876  # ← CI overwrites this
+version: e5fcb8ae4a3493a60e769c7cd8f3e124a8c73d39  # ← CI overwrites this
 
 image:
   repository: kyowanghwe99/new-product-service
