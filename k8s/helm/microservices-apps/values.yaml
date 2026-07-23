@@ -15,7 +15,7 @@ commonConfig:
 # ─────────────────────────────────────────────────────────────
 services:
   api-gateway:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/new-api-gateway
       pullPolicy: IfNotPresent
@@ -47,7 +47,7 @@ services:
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.microservices-infra.svc.cluster.local:8080/realms/spring-microservices-security-realm"
 
   product-service:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/new-product-service
       pullPolicy: IfNotPresent
@@ -73,7 +73,7 @@ services:
       SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb.microservices-infra.svc.cluster.local:27017/product-service?authSource=admin"
 
   order-service:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/new-order-service
       pullPolicy: IfNotPresent
@@ -107,7 +107,7 @@ services:
       SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.microservices-infra.svc.cluster.local:8081"
 
   inventory-service:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/new-inventory-service
       pullPolicy: IfNotPresent
@@ -133,7 +133,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/inventory_service"
 
   notification-service:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/new-notification-service
       pullPolicy: IfNotPresent
@@ -161,7 +161,7 @@ services:
       SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.default.svc.cluster.local:8081"
 
   frontend:
-    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    version: 0c0ba80ab70f96a8a253ed08fa861387ab08e53c  # ← CI overwrites this
     image:
       repository: kyowanghwe99/frontend
       pullPolicy: IfNotPresent
