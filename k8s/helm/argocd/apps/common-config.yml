@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: common-config-helm
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kyowanghwe/spring-boot-3-microservices-course.git
+    targetRevision: deploy
+    path: k8s/helm/microservice-chart
+    helm:
+      valueFiles:
+        - values/common-config.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: microservices-apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
