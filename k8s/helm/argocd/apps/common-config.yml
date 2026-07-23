@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: common-config-helm
   namespace: argocd
+  labels:
+    app.kubernetes.io/instance: microservices-apps
+    finalizers: resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
