@@ -2,7 +2,7 @@
 # CI updates ONLY the 'version' field
 
 name: api-gateway
-version: e549edf3787418adf39c335049a8e009cfdf2822  # ← CI overwrites this
+version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
 
 image:
   repository: kyowanghwe99/new-api-gateway
