@@ -1,0 +1,173 @@
+# ============================================================
+# All microservices in one umbrella chart
+# CI updates ONLY the 'version' field for each service
+# ============================================================
+
+# Shared ConfigMap for all services
+commonConfig:
+  LOKI_URL: "http://loki.microservices-infra.svc.cluster.local:3100/loki/api/v1/push"
+  MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "http://tempo.microservices-infra.svc.cluster.local:9411"
+  PRODUCT_SERVICE_URL: "http://product-service:8080"
+  ORDER_SERVICE_URL: "http://order-service:8081"
+  INVENTORY_SERVICE_URL: "http://inventory-service:8082"
+  SPRING_KAFKA_BOOTSTRAP-SERVERS: "broker.microservices-infra.svc.cluster.local:29092"
+
+# ─────────────────────────────────────────────────────────────
+services:
+  api-gateway:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/new-api-gateway
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 9000
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "768Mi"
+        cpu: "500m"
+    commonConfigKeys:
+      - name: LOKI_URL
+        key: LOKI_URL
+      - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+        key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+      - name: PRODUCT_SERVICE_URL
+        key: PRODUCT_SERVICE_URL
+      - name: ORDER_SERVICE_URL
+        key: ORDER_SERVICE_URL
+      - name: INVENTORY_SERVICE_URL
+        key: INVENTORY_SERVICE_URL
+    envFromConfigMap:
+      - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+        configMapName: api-gateway-config
+        configMapKey: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+    configMapData:
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: "http://keycloak.microservices-infra.svc.cluster.local:8080/realms/spring-microservices-security-realm"
+
+  product-service:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/new-product-service
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8080
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "768Mi"
+        cpu: "500m"
+    commonConfigKeys:
+      - name: LOKI_URL
+        key: LOKI_URL
+      - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+        key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    envFromConfigMap:
+      - name: SPRING_DATA_MONGODB_URI
+        configMapName: product-service-config
+        configMapKey: SPRING_DATA_MONGODB_URI
+    configMapData:
+      SPRING_DATA_MONGODB_URI: "mongodb://root:password@mongodb.microservices-infra.svc.cluster.local:27017/product-service?authSource=admin"
+
+  order-service:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/new-order-service
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8081
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "768Mi"
+        cpu: "500m"
+    commonConfigKeys:
+      - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+        key: SPRING_KAFKA_BOOTSTRAP-SERVERS
+      - name: LOKI_URL
+        key: LOKI_URL
+      - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+        key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+      - name: INVENTORY_SERVICE_URL
+        key: INVENTORY_SERVICE_URL
+    envFromConfigMap:
+      - name: SPRING_DATASOURCE_URL
+        configMapName: order-service-config
+        configMapKey: SPRING_DATASOURCE_URL
+      - name: SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL
+        configMapName: order-service-config
+        configMapKey: SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL
+    configMapData:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/order_service"
+      SPRING_KAFKA_PRODUCER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.microservices-infra.svc.cluster.local:8081"
+
+  inventory-service:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/new-inventory-service
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8082
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "768Mi"
+        cpu: "500m"
+    commonConfigKeys:
+      - name: LOKI_URL
+        key: LOKI_URL
+      - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+        key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    envFromConfigMap:
+      - name: SPRING_DATASOURCE_URL
+        configMapName: inventory-service-config
+        configMapKey: SPRING_DATASOURCE_URL
+    configMapData:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql.microservices-infra.svc.cluster.local:3306/inventory_service"
+
+  notification-service:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/new-notification-service
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8083
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "768Mi"
+        cpu: "500m"
+    commonConfigKeys:
+      - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+        key: SPRING_KAFKA_BOOTSTRAP-SERVERS
+      - name: LOKI_URL
+        key: LOKI_URL
+      - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+        key: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+    envFromConfigMap:
+      - name: SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL
+        configMapName: notification-service-config
+        configMapKey: SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL
+    configMapData:
+      SPRING_KAFKA_CONSUMER_PROPERTIES_SCHEMA_REGISTRY_URL: "http://schema-registry.default.svc.cluster.local:8081"
+
+  frontend:
+    version: ed283fb179845a8833cceab37c9d668c16c64895  # ← CI overwrites this
+    image:
+      repository: kyowanghwe99/frontend
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 80
+    resources: null
+    commonConfigKeys: []
+    envFromConfigMap: []
+    configMapData: {}

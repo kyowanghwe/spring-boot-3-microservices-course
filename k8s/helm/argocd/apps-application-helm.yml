@@ -1,16 +1,8 @@
 # ============================================================
-# HELM VERSION — ArgoCD App of Apps (Applications)
+# HELM VERSION — Single ArgoCD Application (Umbrella Chart)
 # ============================================================
-# Uses the App of Apps pattern to group all microservice helm apps
-# under a single parent "microservices-apps" Application, matching
-# the same grouping as the raw manifest approach.
-#
-# Parent app deploys child Application manifests from:
-#   k8s/helm/argocd/apps/
-#
-# Requires: ArgoCD v2.3+
-# Install/upgrade ArgoCD (must use --server-side to avoid annotation size limit error):
-#   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --server-side
+# Deploys ALL microservices via a single umbrella Helm chart.
+# This gives the same grouped resource tree view as microservices-infra.
 #
 # To use:
 #   kubectl apply -f k8s/helm/argocd/apps-application-helm.yml
@@ -25,10 +17,10 @@ spec:
   source:
     repoURL: https://github.com/kyowanghwe/spring-boot-3-microservices-course.git
     targetRevision: deploy
-    path: k8s/helm/argocd/apps
+    path: k8s/helm/microservices-apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: microservices-apps
   syncPolicy:
     automated:
       prune: true
@@ -37,7 +29,7 @@ spec:
       - CreateNamespace=true
 ---
 # ============================================================
-# INFRA — Still uses raw manifests (no Helm needed for infra)
+# INFRA — Still uses raw manifests
 # ============================================================
 apiVersion: argoproj.io/v1alpha1
 kind: Application

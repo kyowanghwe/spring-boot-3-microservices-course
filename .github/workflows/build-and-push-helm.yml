@@ -149,22 +149,22 @@ jobs:
           ref: deploy
           fetch-depth: 0
 
-      - name: Update service values files (version only)
+      - name: Update service versions in umbrella chart
         if: needs.build-service.result == 'success'
         run: |
           services=("product-service" "order-service" "inventory-service" "notification-service" "api-gateway")
           changed=("${{ needs.detect-changes.outputs.product }}" "${{ needs.detect-changes.outputs.order }}" "${{ needs.detect-changes.outputs.inventory }}" "${{ needs.detect-changes.outputs.notification }}" "${{ needs.detect-changes.outputs.gateway }}")
           for i in "${!services[@]}"; do
             if [ "${changed[$i]}" == "true" ]; then
-              # Only update the version line — everything else stays untouched
-              sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservice-chart/values/${services[$i]}.yaml
+              # Update version under the service's section in the umbrella values.yaml
+              sed -i "/^  ${services[$i]}:/,/^  [a-z]/ s|^\(    version:\).*|\1 ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservices-apps/values.yaml
             fi
           done
 
-      - name: Update frontend values file (version only)
+      - name: Update frontend version in umbrella chart
         if: needs.build-frontend.result == 'success'
         run: |
-          sed -i "s|^version:.*|version: ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservice-chart/values/frontend.yaml
+          sed -i "/^  frontend:/,$ s|^\(    version:\).*|\1 ${{ github.sha }}  # ← CI overwrites this|" k8s/helm/microservices-apps/values.yaml
 
       - name: Commit and push to deploy branch
         run: |
